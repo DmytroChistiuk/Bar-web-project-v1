@@ -11,9 +11,9 @@ public class LoginController implements Controller {
 
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
-        String userName = req.getParameter("userName");
+        String name = req.getParameter("name");
         String password = req.getParameter("password");
-        User user = userService.getByUserName(userName);
+        User user = userService.getByUserName(name);
 
         if(user.getPassword().equals(password)) {
             req.setAttribute("user", user);

@@ -11,7 +11,7 @@ public class UserService {
 
     public User getByUserName(String username) {
         try {
-            return userDao.findByName(username);
+            return UserDAO.findByName(username);
         } catch (SQLException e) {
             System.out.println("Failed to find");
             return null;

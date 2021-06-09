@@ -1,6 +1,6 @@
 package controller;
 
-import org.springframework.stereotype.Controller;
+import controller.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -14,8 +14,7 @@ public class ControllerFactory {
         controllerMap.put("GET/login", new ShowPageController("login"));
         controllerMap.put("GET/main", new ShowPageController("main"));
         controllerMap.put("GET/client", new ShowPageController("login"));
-        controllerMap.put("GET/login", new ShowPageController("login"));
-        controllerMap.put("GET/login", new ShowPageController("login"));
+
 
         controllerMap.put("POST/login", (Controller) new LoginController());
     }
