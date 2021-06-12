@@ -14,7 +14,7 @@ public class UserBarDAO {
     private static final String INSERT_SQL = "INSERT INTO user_bar(" + USER_FILDS + ") VALUES(?, ?)";
     private static final String DELETE = "DELETE FROM user_bar WHERE id = ?";
 
-    public static void deleteUserBar(int id) {
+    public  void deleteUserBar(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -37,13 +37,13 @@ public class UserBarDAO {
         }
     }
 
-    public static UserBar findById(int id) throws SQLException {
+    public UserBar findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <UserBar> usersBar = new ArrayList<>();
+
             if (resultSet.next()) {
                 UserBar userBar = new UserBar();
                 userBar.setId(resultSet.getInt("id"));

@@ -15,7 +15,7 @@ public class AdditiveCocktailIngredientDAO {
     private static final String INSERT_SQL = "INSERT INTO additive_cocktail_ingredient(" + USER_FILDS + ") VALUES(?)";
     private static final String DELETE = "DELETE FROM additive_cocktail_ingredient WHERE id = ?";
 
-    public static void deleteAdditiveCocktailIngredient(int id) {
+    public  void deleteAdditiveCocktailIngredient(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -37,13 +37,13 @@ public class AdditiveCocktailIngredientDAO {
         }
     }
 
-    public static AdditiveCocktailIngredient findById(int id) throws SQLException {
+    public  AdditiveCocktailIngredient findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <AdditiveCocktailIngredient> additiveCocktailIngredients = new ArrayList<>();
+
             if (resultSet.next()) {
                 AdditiveCocktailIngredient additiveCocktailIngredient = new AdditiveCocktailIngredient();
 

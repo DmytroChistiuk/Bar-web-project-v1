@@ -14,7 +14,7 @@ public class AdditiveDAO {
     private static final String INSERT_SQL = "INSERT INTO additive(" + USER_FILDS + ") VALUES(?)";
     private static final String DELETE = "DELETE FROM additive WHERE id = ?";
 
-    public static void deleteAdditive(int id) {
+    public  void deleteAdditive(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -35,13 +35,13 @@ public class AdditiveDAO {
         }
     }
 
-    public static Additive findById(int id) throws SQLException {
+    public  Additive findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <Additive> additives = new ArrayList<>();
+
             if (resultSet.next()) {
                 Additive additive = new Additive();
 

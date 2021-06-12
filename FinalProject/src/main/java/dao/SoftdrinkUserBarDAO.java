@@ -17,7 +17,7 @@ public class SoftdrinkUserBarDAO {
     private static final String INSERT_SQL = "INSERT INTO softdrink_user_bar(" + USER_FILDS + ") VALUES(?)";
     private static final String DELETE = "DELETE FROM softdrink_user_bar WHERE id = ?";
 
-    public static void deleteSoftdrinkUserBar(int id) {
+    public  void deleteSoftdrinkUserBar(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -39,13 +39,13 @@ public class SoftdrinkUserBarDAO {
         }
     }
 
-    public static SoftdrinkUserBar findById(int id) throws SQLException {
+    public  SoftdrinkUserBar findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <SoftdrinkUserBar>  softdrinkUserBars = new ArrayList<>();
+
             if (resultSet.next()) {
                 SoftdrinkUserBar softdrinkUserBar = new SoftdrinkUserBar();
                 softdrinkUserBar.setUserBarSoftdrinkId(resultSet.getInt("UserBarSoftdrinkId"));
@@ -56,7 +56,7 @@ public class SoftdrinkUserBarDAO {
 
         }}
 
-    public static List<SoftdrinkUserBar> findAll() throws SQLException {
+    public  List<SoftdrinkUserBar> findAll() throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {

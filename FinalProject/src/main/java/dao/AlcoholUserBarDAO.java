@@ -15,7 +15,7 @@ public class AlcoholUserBarDAO {
     private static final String INSERT_SQL = "INSERT INTO user(" + USER_FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM user WHERE id = ?";
 
-    public static void deleteAlcoholUserBar(int id) {
+    public  void deleteAlcoholUserBar(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -41,7 +41,7 @@ public class AlcoholUserBarDAO {
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <AlcoholUserBar> alcoholUserBars = new ArrayList<>();
+
             if (resultSet.next()) {
                 AlcoholUserBar alcoholUserBar = new AlcoholUserBar();
 

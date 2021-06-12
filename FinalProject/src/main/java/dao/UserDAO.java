@@ -14,7 +14,7 @@ public class UserDAO {
     private static final String QUERY_FIND_BY_ID="SELECT * FROM user where id = ?";
     private static final String INSERT_SQL = "INSERT INTO user(" + USER_FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM user WHERE id = ?";
-    private static final String QUERY_FIND_BY_NAME="SELECT * FROM user where name = ?";
+    private static final String QUERY_FIND_BY_NAME="SELECT * FROM user where login = ?";
     public static void deleteUser(int id) {
         try (Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
@@ -39,7 +39,7 @@ public class UserDAO {
         }
     }
 
-    public static User findById(int id) throws SQLException {
+    public  User findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
            ) {
@@ -59,7 +59,7 @@ public class UserDAO {
 
     }}
 
-    public static User findByName(String name) throws SQLException {
+    public  User findByName(String name) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
         ) {

@@ -10,6 +10,14 @@ public class MySQLUtil {
     private static final String PASSWORD="root";
     private static final String USERNAME="root";
     public static Connection getConnection() throws SQLException {
+        try{
+            Class.forName ("com.mysql.jdbc.Driver");
+        }
+        catch ( ClassNotFoundException e){
+           e.printStackTrace();
+
+        }
+
         return DriverManager.getConnection(URL,USERNAME,PASSWORD);
     }
 }

@@ -15,7 +15,7 @@ public class CocktailIngredientDAO {
     private static final String INSERT_SQL = "INSERT INTO cocktail_ ingredient(" + USER_FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM cocktail_ ingredient WHERE id = ?";
 
-    public static void deleteCocktailIngredient(int id) {
+    public  void deleteCocktailIngredient(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -40,13 +40,13 @@ public class CocktailIngredientDAO {
         }
     }
 
-    public static CocktailIngredient findById(int id) throws SQLException {
+    public  CocktailIngredient findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <CocktailIngredient> cocktailIngredients = new ArrayList<>();
+
             if (resultSet.next()) {
                 CocktailIngredient cocktailIngredient = new CocktailIngredient();
 

@@ -15,7 +15,7 @@ public class SoftdrinkDAO {
     private static final String INSERT_SQL = "INSERT INTO softdrink(" + USER_FILDS + ") VALUE(?)";
     private static final String DELETE = "DELETE FROM softdrink WHERE id = ?";
 
-    public static void deleteSoftdrink(int id) {
+    public  void deleteSoftdrink(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -35,13 +35,13 @@ public class SoftdrinkDAO {
         }
     }
 
-    public static Softdrink findById(int id) throws SQLException {
+    public  Softdrink findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List<Softdrink> softdrinks = new ArrayList<>();
+
             if (resultSet.next()) {
                 Softdrink softdrink = new Softdrink();
                 softdrink.setName(resultSet.getString("name"));

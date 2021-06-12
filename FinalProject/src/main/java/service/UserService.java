@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public class UserService {
 
-    private UserDAO userDao = new UserDAO();
+    private UserDAO userDAO = new UserDAO();
 
     public User getByUserName(String username) {
         try {
-            return UserDAO.findByName(username);
+            return userDAO.findByName(username);
         } catch (SQLException e) {
             System.out.println("Failed to find");
             return null;

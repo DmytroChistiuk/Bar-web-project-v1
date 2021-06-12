@@ -14,7 +14,7 @@ public class AlcoholDAO {
     private static final String INSERT_SQL = "INSERT INTO alcohol(" + USER_FILDS + ") VALUES(?)";
     private static final String DELETE = "DELETE FROM alcohol WHERE id = ?";
 
-    public static void deleteAlcohol(int id) {
+    public  void deleteAlcohol(int id) {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
@@ -35,13 +35,13 @@ public class AlcoholDAO {
         }
     }
 
-    public static Alcohol findById(int id) throws SQLException {
+    public Alcohol findById(int id) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
-            List <Alcohol> alcohols = new ArrayList<>();
+
             if (resultSet.next()) {
                 Alcohol alcohol = new Alcohol();
 
