@@ -14,7 +14,7 @@ public class UserDAO {
     private static final String QUERY_FIND_BY_ID="SELECT * FROM user where id = ?";
     private static final String INSERT_SQL = "INSERT INTO user(" + USER_FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM user WHERE id = ?";
-    private static final String QUERY_FIND_BY_NAME="SELECT * FROM user where login = ?";
+    private static final String QUERY_FIND_BY_LOGIN="SELECT * FROM user where login = ?";
     public static void deleteUser(int id) {
         try (Connection connection = MySQLUtil.getConnection();
             PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
@@ -26,7 +26,7 @@ public class UserDAO {
         }
     }
 
-    public Integer createUser(User user) throws SQLException {
+    public User createUser(User user) throws SQLException {
         try (Connection connection = MySQLUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
         {
@@ -35,7 +35,8 @@ public class UserDAO {
             preparedStatement.setString(3, user.getLogin());
             preparedStatement.setString(4, user.getPassword());
 
-            return preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            return user;
         }
     }
 
@@ -59,11 +60,11 @@ public class UserDAO {
 
     }}
 
-    public  User findByName(String name) throws SQLException {
+    public  User findByLogin(String login) throws SQLException {
         try(Connection connection = MySQLUtil.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
+            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_LOGIN);
         ) {
-            prepareStatement.setString(1,name);
+            prepareStatement.setString(1,login);
             ResultSet resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
                 User user = new User();

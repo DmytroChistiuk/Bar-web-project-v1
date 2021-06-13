@@ -4,11 +4,11 @@
 <%--@elvariable id="user" type="com.company.entity.User"--%>
 <html>
 <head>
-    <title>Profile </title>
+    <title>Profile</title>
 </head>
 <body>
-  <p>Id : ${user.id}</p>
+  <p>Welcome dear!</p>
   <p>Name : ${user.name}</p>
-  <p>Password : ${user.password}</p>
+  <p>Surname : ${user.surname}</p>
 </body>
 </html>
