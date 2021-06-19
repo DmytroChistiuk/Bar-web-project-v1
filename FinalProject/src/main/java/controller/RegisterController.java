@@ -5,6 +5,7 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class RegisterController implements Controller {
     private UserService userService = new UserService();
@@ -18,7 +19,7 @@ public class RegisterController implements Controller {
 
         User user = userService.createNewUser(name,surname,login,password);
 
-       if(user.equals(null)) {
+       if(Objects.isNull(user)) {
            return new ControllerResultDto("error-403");
        }
 
