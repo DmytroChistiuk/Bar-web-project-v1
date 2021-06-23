@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import static com.company.SortMapByValue.sortByValue;
+
 public class Part1 {
 
 
@@ -11,28 +13,29 @@ public class Part1 {
         int itarator=0;
         HashMap<String,Integer> domenMap = new HashMap<>(); // мапа результирующих доменов
        String[] arrayDomens = ArrayOfDomenFromFile().toArray(new String[0]); // преобразуем лист в массив стрингов для удобства
-       HashMap<String,Integer> additionalMap = new HashMap<>(); // дополнительная мапа для переноса элемемнтов в результирующую мапу
-        for (int i = 0; i < arrayDomens.length; i++) {  // записываем в доп. мапу все домены
-            additionalMap.put(arrayDomens[i],1);
-        }
 
-        for (int i = 0; i < arrayDomens.length; i++) { // проходимся по масиву доменов
-            for (Map.Entry<String,Integer> entry:additionalMap.entrySet()){ // проходимся по мапе
-                if (arrayDomens[i].equals(entry.getKey())) // сравниваем елемент масива и мапы
-                {
-                   itarator = entry.getValue();
-                   itarator++;
-                    domenMap.remove(arrayDomens[i]); // удаляем прежний элемент ключ - значение,чтобы изменить ключ
-                    domenMap.put(arrayDomens[i],itarator);
-                }
+        for (int i = 0; i < arrayDomens.length; i++) {
+            if (domenMap.containsKey(arrayDomens[i])){
+                itarator = domenMap.get(arrayDomens[i]);
+                itarator++;
+                domenMap.put(arrayDomens[i], itarator);
+            }
                 else {
                     domenMap.put(arrayDomens[i],1); // добавляем елемент, он встречается первый раз
                 }
 
             }
-        }
-        for (Map.Entry<String,Integer> entry:domenMap.entrySet()){ // выводим в консоль все домены и их частоту встречаемости
-        System.out.println("Сколько раз встречается ["+entry.getValue() + "] ~~ Что встречается ["+ entry.getKey()+"]");
+        HashMap<String,Integer> sortedDomenMap = (HashMap<String, Integer>) sortByValue(domenMap);
+        HashMap<String,Integer> map = new HashMap<>();
+        int i=0;
+        itarator=11;
+        for (Map.Entry<String,Integer> entry: sortedDomenMap.entrySet()){ // выводим в консоль все домены и их частоту встречаемости
+            if(sortedDomenMap.size()-i<=10){
+                itarator--;
+                System.out.println("The "+itarator+" place is ["+entry.getKey()+"], that occurs "+entry.getValue()+" times ");
+                //System.out.println("Сколько раз встречается ["+entry.getValue() + "] ~~ Что встречается ["+ entry.getKey()+"]");
+            }
+            i++;
         }
     }
 
