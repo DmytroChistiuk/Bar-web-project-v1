@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class UserService {
 
     private UserDAO userDAO = new UserDAO();
+
     public User createNewUser(String name, String surname, String login, String password) {
         User user = new User();
         user.setName(name);
@@ -30,5 +31,13 @@ return null;
                 return null;
             }
         }
+    public User getById(int id) {
+        try {
+            return userDAO.findById(id);
+        } catch (SQLException e) {
+            System.out.println("Failed to find");
+            return null;
+        }
+    }
     }
 

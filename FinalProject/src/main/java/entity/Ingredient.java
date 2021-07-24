@@ -1,6 +1,6 @@
 package entity;
 
-public class Ingredients {
+public class Ingredient {
     private int ingredientId;
     private String name;
 

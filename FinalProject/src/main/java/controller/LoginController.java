@@ -5,6 +5,7 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoginController implements Controller {
     private UserService userService = new UserService();
@@ -17,6 +18,8 @@ public class LoginController implements Controller {
 
         if(user.getPassword().equals(password)) {
             req.setAttribute("user", user);
+            HttpSession session = req.getSession();
+            session.setAttribute("userId", user.getId());
             return new ControllerResultDto("profile");
         } else {
             return new ControllerResultDto("error-403");

@@ -14,10 +14,16 @@ public class ControllerFactory {
         controllerMap.put("GET/login", new ShowPageController("login"));
         controllerMap.put("GET/main", new ShowPageController("main"));
         controllerMap.put("GET/client", new ShowPageController("login"));
-
+        controllerMap.put("GET/cocktails", new ShowAllCocktailController());
+        controllerMap.put("GET/addToUserBar", new AddUserBarController());
+        controllerMap.put("GET/UserBar", new ShowUserBarController());
         controllerMap.put("GET/register", new ShowPageController("register"));
+
+
+
         controllerMap.put("POST/register", (Controller) new RegisterController());
         controllerMap.put("POST/login", (Controller) new LoginController());
+
     }
 
     public Controller getController(HttpServletRequest request) {

@@ -1,31 +1,22 @@
 package entity;
-/*Сущность “Бар пользователя” требуется для хранения ингредиентов которые есть у пользователя.*/
+
 public class UserBar {
-    private int UserBarAlcoholId;
-    private int UserBarSoftdrinkId;
-    private int id;
+    private int userId;
+    private String cocktailName;
 
-    public int getUserBarAlcoholId() {
-        return UserBarAlcoholId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserBarAlcoholId(int userBarAlcoholId) {
-        UserBarAlcoholId = userBarAlcoholId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getUserBarSoftdrinkId() {
-        return UserBarSoftdrinkId;
+    public String getCocktailName() {
+        return cocktailName;
     }
 
-    public void setUserBarSoftdrinkId(int userBarSoftdrinkId) {
-        UserBarSoftdrinkId = userBarSoftdrinkId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setCocktailName(String cocktailName) {
+        this.cocktailName = cocktailName;
     }
 }

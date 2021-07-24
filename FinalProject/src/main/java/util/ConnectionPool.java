@@ -1,4 +1,4 @@
-package com.company;
+package util;
 
 import util.MySQLUtil;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.Executor;
 
 public class ConnectionPool {
     private Queue<Connection> queue = new LinkedList<>();
-    public Connection get(){
+    public Connection getConnection(){
         return queue.poll();
     }
     public void init() throws SQLException {
@@ -84,7 +84,7 @@ public class ConnectionPool {
 
         @Override
         public void setReadOnly(boolean readOnly) throws SQLException {
-            connection.setReadOnly();
+            connection.setReadOnly(readOnly);
         }
 
         @Override
@@ -94,7 +94,7 @@ public class ConnectionPool {
 
         @Override
         public void setCatalog(String catalog) throws SQLException {
-            connection.setCatalog();
+            connection.setCatalog(catalog);
         }
 
         @Override
@@ -104,7 +104,7 @@ public class ConnectionPool {
 
         @Override
         public void setTransactionIsolation(int level) throws SQLException {
-            connection.setTransactionIsolation();
+            connection.setTransactionIsolation(level);
         }
 
         @Override
