@@ -16,10 +16,8 @@ public class IngredientDAO {
     private static final String INSERT_SQL = "INSERT INTO ingredients(" + FILDS + ") VALUES(?)";
     private static final String DELETE = "DELETE FROM ingredients WHERE ingredient_id = ?";
 
-    public static void deleteCocktail(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
+    public static void deleteCocktail(int id,Connection connection) throws SQLException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
@@ -29,10 +27,8 @@ public class IngredientDAO {
     }
 
 
-    public Ingredient createIngredient(Ingredient ingredient) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
+    public Ingredient createIngredient(Ingredient ingredient,Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
         {
             preparedStatement.setString(1, ingredient.getName());
             preparedStatement.executeUpdate();
@@ -40,10 +36,8 @@ public class IngredientDAO {
         }
     }
 
-    public  Ingredient findById(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
+    public  Ingredient findById(int id,Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -58,10 +52,8 @@ public class IngredientDAO {
         }}
 
 
-    public static List<Ingredient> findAll() throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
+    public static List<Ingredient> findAll(Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List <Ingredient> ingredients = new ArrayList<>();
 

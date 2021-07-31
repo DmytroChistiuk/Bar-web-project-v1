@@ -6,12 +6,13 @@ import service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class LoginController implements Controller {
     private UserService userService = new UserService();
 
     @Override
-    public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
+    public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         User user = userService.getByUserLogin(login);

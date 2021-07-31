@@ -1,11 +1,30 @@
 package entity;
 
+import java.util.Objects;
+
 public class User {
     private int id;
     private String name;
     private String surname;
     private String login;
     private String password;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, login, password);
+    }
 
     public int getId() {
         return id;

@@ -16,10 +16,8 @@ public class CocktailDAO {
     private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
-    public static void deleteCocktail(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
+    public static void deleteCocktail(int id,Connection connection) throws SQLException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
@@ -28,10 +26,8 @@ public class CocktailDAO {
         }
     }
 
-    public Cocktail createCocktail(Cocktail cocktail) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
+    public Cocktail createCocktail(Cocktail cocktail,Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
         {
             preparedStatement.setString(1, cocktail.getCocktailName());
             preparedStatement.setString(2, cocktail.getRecipe());
@@ -43,10 +39,8 @@ public class CocktailDAO {
         }
     }
 
-    public  Cocktail findById(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
+    public  Cocktail findById(int id,Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -64,10 +58,9 @@ public class CocktailDAO {
         }}
 
 
-    public  List<Cocktail> findAllCocktails() throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
+    public  List<Cocktail> findAllCocktails(Connection connection) throws SQLException {
+
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List <Cocktail> cocktails = new ArrayList<>();
 

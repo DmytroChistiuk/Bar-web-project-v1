@@ -23,10 +23,8 @@ public class CocktailIngredientsDAO {
 
 
 
-    public static HashMap<String, List<CocktailIngredients>> findByCocktailName(String name) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_СOCKTAILNAME);
+    public static HashMap<String, List<CocktailIngredients>> findByCocktailName(String name,Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_СOCKTAILNAME);
         ) {
             prepareStatement.setString(1, name);
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -43,10 +41,8 @@ public class CocktailIngredientsDAO {
         }}
 
 
-    public static List<CocktailIngredients> findAll() throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
+    public static List<CocktailIngredients> findAll(Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List <CocktailIngredients> cocktailIngredients = new ArrayList<>();
 

@@ -17,10 +17,8 @@ public class UserDAO {
     private static final String DELETE = "DELETE FROM user WHERE id = ?";
     private static final String QUERY_FIND_BY_LOGIN="SELECT * FROM user where login = ?";
 
-    public static void deleteUser(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
+    public static void deleteUser(int id,Connection connection) throws SQLException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
@@ -29,10 +27,8 @@ public class UserDAO {
         }
     }
 
-    public User createUser(User user) throws SQLException {
-       ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL))
+    public User createUser(User user,Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL))
         {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
@@ -43,10 +39,8 @@ public class UserDAO {
         }
     }
 
-    public  User findById(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
+    public  User findById(int id,Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
            ) {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -64,10 +58,8 @@ public class UserDAO {
 
     }}
 
-    public  User findByLogin(String login) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_LOGIN);
+    public  User findByLogin(String login,Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_LOGIN);
         ) {
             prepareStatement.setString(1,login);
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -87,10 +79,8 @@ public class UserDAO {
 
 
 
-    public static List<User> findAll() throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
+    public static List<User> findAll(Connection connection) throws SQLException {
+        try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List <User> users = new ArrayList<>();
 

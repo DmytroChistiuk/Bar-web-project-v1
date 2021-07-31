@@ -14,29 +14,37 @@ import java.util.List;
 
 public class UserBarDAO {
 
-    private static final String QUERY_FIND_ALL="select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history from user_bar inner join user on user_bar.user_id=user.id inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name";
-    private static final String QUERY_FIND_BY_ID="select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history from user_bar inner join user on user_bar.user_id=user.id inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name where user.id =?";
-    private static final String QUERY_FIND_BY_NAME="select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history from user_bar inner join user on user_bar.user_id=user.id inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name where user.name =?";
+    private static final String QUERY_FIND_ALL = "" +
+            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history" +
+            " from user_bar" +
+            " inner join user on user_bar.user_id=user.id" +
+            " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name";
+    private static final String QUERY_FIND_BY_ID = "" +
+            "select cocktail.cocktail_id, user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history" +
+            " from user_bar " +
+            "inner join user on user_bar.user_id=user.id " +
+            "inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name " +
+            "where user.id =?";
+    private static final String QUERY_FIND_BY_NAME = "" +
+            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history"
+            + " from user_bar" +
+            " inner join user on user_bar.user_id=user.id" +
+            " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name where user.name =?";
     private static final String INSERT_SQL = "INSERT INTO user_bar VALUES(?, ?)";
-    private static final String DELETE = "DELETE FROM user_bar WHERE cocktail_name = ?";
+    private static final String DELETE = "DELETE FROM user_bar WHERE cocktail_name = ? AND user_id = ?";
 
-    public static void deleteCocktailFromUserBar(String name) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
-        {
+    public static void deleteCocktailFromUserBar(String name, int id,Connection connection) {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
             prepareStatement.setString(1, name);
+            prepareStatement.setInt(2, id);
             prepareStatement.executeUpdate();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
-        {
+    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail,Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, cocktail.getCocktailName());
             preparedStatement.executeUpdate();
@@ -44,11 +52,9 @@ public class UserBarDAO {
         }
     }
 
-    public  List<Cocktail> findAllCocktailByUserBarId(int id) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
-        ) {
+    public List<Cocktail> findAllCocktailByUserBarId(int id,Connection connection) throws SQLException {
+
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID)) {
             prepareStatement.setLong(1, id);
             List<Cocktail> cocktails = new ArrayList<>();
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -57,21 +63,25 @@ public class UserBarDAO {
                 String cocktailName = resultSet.getString("cocktail_name");
                 String cocktailType = resultSet.getString("cocktail_type");
                 String cocktailHistory = resultSet.getString("cocktail_history");
+                int cocktail_id = resultSet.getInt("cocktail_id");
                 String recipe = resultSet.getString("recipe");
                 cocktail.setCocktailName(cocktailName);
                 cocktail.setCocktailType(cocktailType);
                 cocktail.setCocktailHistory(cocktailHistory);
                 cocktail.setRecipe(recipe);
-               cocktails.add(cocktail);
+                cocktail.setCocktailId(cocktail_id);
+                cocktails.add(cocktail);
             }
-            return cocktails;
-        }}
+            if (cocktails.isEmpty()) {
+                return null;
+            } else {
+                return cocktails;
+            }
+        }
+    }
 
-    private  List<Cocktail> findAllCocktailInUserBarByName(String name) throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
-        ) {
+    private List<Cocktail> findAllCocktailInUserBarByName(String name,Connection connection) throws SQLException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME)) {
             prepareStatement.setString(1, name);
             List<Cocktail> cocktails = new ArrayList<>();
             ResultSet resultSet = prepareStatement.executeQuery();
@@ -88,22 +98,21 @@ public class UserBarDAO {
                 cocktails.add(cocktail);
             }
             return cocktails;
-        }}
+        }
+    }
 
-    public static HashMap<String,List<Cocktail>> findAll() throws SQLException {
-        ConnectionPool connectionPool = ConnectionContext.get();
-        try(Connection connection = connectionPool.getConnection();
-            PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
-            ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
+    public static HashMap<String, List<Cocktail>> findAll(Connection connection) throws SQLException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
+             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
 
-            HashMap<String,List<Cocktail>> allUsersCocktails = new HashMap<>();
+            HashMap<String, List<Cocktail>> allUsersCocktails = new HashMap<>();
 
             while (resultSet.next()) {
 
                 String userName = resultSet.getString("name");
                 UserBarDAO userBarDAO = new UserBarDAO();
-                List <Cocktail> cocktails = userBarDAO.findAllCocktailInUserBarByName(userName);
-                allUsersCocktails.put(userName,cocktails);
+                List<Cocktail> cocktails = userBarDAO.findAllCocktailInUserBarByName(userName,connection);
+                allUsersCocktails.put(userName, cocktails);
             }
             return allUsersCocktails;
         }
