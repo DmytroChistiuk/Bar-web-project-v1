@@ -8,6 +8,8 @@ import util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static util.Sha256Encryption.getSha256;
+
 public class UserService {
 
     private UserDAO userDAO = new UserDAO();
@@ -18,7 +20,7 @@ public class UserService {
         user.setName(name);
         user.setSurname(surname);
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(getSha256(password));
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
             return userDAO.createUser(user,connection);

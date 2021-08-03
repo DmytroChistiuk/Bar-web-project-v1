@@ -1,6 +1,8 @@
 package dao;
 
 import entity.Cocktail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.ConnectionContext;
 import util.ConnectionPool;
 import util.MySQLUtil;
@@ -10,23 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CocktailDAO {
+    private static final Logger logger = LoggerFactory.getLogger(CocktailDAO.class);
     private static final String FILDS= "cocktail_name, cocktail_type, cocktail_history, recipe";
     private static final String QUERY_FIND_ALL="SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe FROM cocktail";
     private static final String QUERY_FIND_BY_ID="SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe FROM cocktail where cocktail_id = ?";
     private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
-    public static void deleteCocktail(int id,Connection connection) throws SQLException {
+    public static void deleteCocktail(int id,Connection connection)  {
         try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE))
         {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
         } catch(Exception e) {
-            System.out.println(e);
+            logger.error("Failed to delete cocktail",e);
         }
     }
 
-    public Cocktail createCocktail(Cocktail cocktail,Connection connection) throws SQLException {
+    public Cocktail createCocktail(Cocktail cocktail,Connection connection)  {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
         {
             preparedStatement.setString(1, cocktail.getCocktailName());
@@ -36,10 +39,13 @@ public class CocktailDAO {
 
             preparedStatement.executeUpdate();
             return cocktail;
+        } catch (SQLException e) {
+            logger.error("Failed to create cocktail",e);
         }
+        return null;
     }
 
-    public  Cocktail findById(int id,Connection connection) throws SQLException {
+    public  Cocktail findById(int id,Connection connection)  {
         try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
@@ -55,10 +61,14 @@ public class CocktailDAO {
             }
             return null;
 
-        }}
+        } catch (SQLException e) {
+            logger.error("Failed to find cocktail by id",e);
+        }
+        return null;
+    }
 
 
-    public  List<Cocktail> findAllCocktails(Connection connection) throws SQLException {
+    public  List<Cocktail> findAllCocktails(Connection connection) {
 
         try(PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
@@ -82,7 +92,9 @@ public class CocktailDAO {
                 cocktails.add(cocktail);
             }
             return cocktails;
+        } catch (SQLException e) {
+            logger.error("Failed to find all cocktails",e);
         }
-
+        return null;
     }
 }

@@ -2,6 +2,8 @@ package dao;
 
 import entity.Cocktail;
 import entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.UserService;
 import util.ConnectionContext;
 import util.ConnectionPool;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class UserBarDAO {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserBarDAO.class);
     private static final String QUERY_FIND_ALL = "" +
             "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history" +
             " from user_bar" +
@@ -39,20 +41,23 @@ public class UserBarDAO {
             prepareStatement.setInt(2, id);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e);
+            logger.error("Failed to delete cocktail from user bar",e);
         }
     }
 
-    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail,Connection connection) throws SQLException {
+    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail,Connection connection)  {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, cocktail.getCocktailName());
             preparedStatement.executeUpdate();
             return cocktail;
+        } catch (SQLException e) {
+            logger.error("Failed to add cocktail to user bar",e);
         }
+        return null;
     }
 
-    public List<Cocktail> findAllCocktailByUserBarId(int id,Connection connection) throws SQLException {
+    public List<Cocktail> findAllCocktailByUserBarId(int id,Connection connection){
 
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID)) {
             prepareStatement.setLong(1, id);
@@ -77,10 +82,13 @@ public class UserBarDAO {
             } else {
                 return cocktails;
             }
+        } catch (SQLException e) {
+            logger.error("Failed to find all cocktail from user bar by id",e);
         }
+        return null;
     }
 
-    private List<Cocktail> findAllCocktailInUserBarByName(String name,Connection connection) throws SQLException {
+    private List<Cocktail> findAllCocktailInUserBarByName(String name,Connection connection) {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME)) {
             prepareStatement.setString(1, name);
             List<Cocktail> cocktails = new ArrayList<>();
@@ -98,10 +106,13 @@ public class UserBarDAO {
                 cocktails.add(cocktail);
             }
             return cocktails;
+        } catch (SQLException e) {
+            logger.error("Failed to find all cocktail from user bar by name",e);
         }
+        return null;
     }
 
-    public static HashMap<String, List<Cocktail>> findAll(Connection connection) throws SQLException {
+    public static HashMap<String, List<Cocktail>> findAll(Connection connection)  {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
 
@@ -115,8 +126,10 @@ public class UserBarDAO {
                 allUsersCocktails.put(userName, cocktails);
             }
             return allUsersCocktails;
+        } catch (SQLException e) {
+            logger.error("Failed to find all cocktail from all user bars",e);
         }
-
+        return null;
     }
 }
 
