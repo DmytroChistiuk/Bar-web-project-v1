@@ -1,4 +1,3 @@
-package test;
 
 import dao.UserDAO;
 import entity.User;
@@ -19,6 +18,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
+
     private UserService userService;
     private UserDAO userDAO;
     @Before
@@ -110,6 +110,6 @@ public class UserServiceTest {
         assertEquals(user2.getSurname(),currentUser2.getSurname());
         assertEquals(user2.getLogin(),currentUser2.getLogin());
         assertEquals(user2.getPassword(),currentUser2.getPassword());
-
+        }
     }
-}
+

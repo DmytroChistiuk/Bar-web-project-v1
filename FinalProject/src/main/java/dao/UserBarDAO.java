@@ -35,29 +35,29 @@ public class UserBarDAO {
     private static final String INSERT_SQL = "INSERT INTO user_bar VALUES(?, ?)";
     private static final String DELETE = "DELETE FROM user_bar WHERE cocktail_name = ? AND user_id = ?";
 
-    public static void deleteCocktailFromUserBar(String name, int id,Connection connection) {
+    public static void deleteCocktailFromUserBar(String name, int id, Connection connection) {
         try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
             prepareStatement.setString(1, name);
             prepareStatement.setInt(2, id);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
-            logger.error("Failed to delete cocktail from user bar",e);
+            //      logger.error("Failed to delete cocktail from user bar",e);
         }
     }
 
-    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail,Connection connection)  {
+    public Cocktail addCocktailToUserBar(int id, Cocktail cocktail, Connection connection) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, cocktail.getCocktailName());
             preparedStatement.executeUpdate();
             return cocktail;
         } catch (SQLException e) {
-            logger.error("Failed to add cocktail to user bar",e);
+            logger.error("Failed to add cocktail to user bar", e);
         }
         return null;
     }
 
-    public List<Cocktail> findAllCocktailByUserBarId(int id,Connection connection){
+    public List<Cocktail> findAllCocktailByUserBarId(int id, Connection connection) {
 
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID)) {
             prepareStatement.setLong(1, id);
@@ -83,12 +83,12 @@ public class UserBarDAO {
                 return cocktails;
             }
         } catch (SQLException e) {
-            logger.error("Failed to find all cocktail from user bar by id",e);
+            logger.error("Failed to find all cocktail from user bar by id", e);
         }
         return null;
     }
 
-    private List<Cocktail> findAllCocktailInUserBarByName(String name,Connection connection) {
+    private List<Cocktail> findAllCocktailInUserBarByName(String name, Connection connection) {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME)) {
             prepareStatement.setString(1, name);
             List<Cocktail> cocktails = new ArrayList<>();
@@ -107,12 +107,12 @@ public class UserBarDAO {
             }
             return cocktails;
         } catch (SQLException e) {
-            logger.error("Failed to find all cocktail from user bar by name",e);
+            logger.error("Failed to find all cocktail from user bar by name", e);
         }
         return null;
     }
 
-    public static HashMap<String, List<Cocktail>> findAll(Connection connection)  {
+    public static HashMap<String, List<Cocktail>> findAll(Connection connection) {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
 
@@ -122,12 +122,12 @@ public class UserBarDAO {
 
                 String userName = resultSet.getString("name");
                 UserBarDAO userBarDAO = new UserBarDAO();
-                List<Cocktail> cocktails = userBarDAO.findAllCocktailInUserBarByName(userName,connection);
+                List<Cocktail> cocktails = userBarDAO.findAllCocktailInUserBarByName(userName, connection);
                 allUsersCocktails.put(userName, cocktails);
             }
             return allUsersCocktails;
         } catch (SQLException e) {
-            logger.error("Failed to find all cocktail from all user bars",e);
+            logger.error("Failed to find all cocktail from all user bars", e);
         }
         return null;
     }
