@@ -12,8 +12,15 @@ import static util.Sha256Encryption.getSha256;
 
 public class UserService {
 
-    private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO;
 
+    public UserService() {
+        userDAO = new UserDAO();
+    }
+
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public User createNewUser(String name, String surname, String login, String password) throws SQLException {
         User user = new User();

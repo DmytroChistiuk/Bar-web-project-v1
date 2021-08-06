@@ -19,7 +19,7 @@ public class CocktailDAO {
     private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
-    public static void deleteCocktail(int id, Connection connection) {
+    public void deleteCocktail(int id, Connection connection) {
         try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
