@@ -2,6 +2,7 @@ package service;
 
 import dao.UserDAO;
 import entity.User;
+import org.apache.log4j.Logger;
 import util.ConnectionContext;
 import util.ConnectionPool;
 
@@ -11,9 +12,8 @@ import java.sql.SQLException;
 import static util.Sha256Encryption.getSha256;
 
 public class UserService {
-
+    private static final Logger loggerService = Logger.getLogger(UserBarService.class);
     private UserDAO userDAO;
-
     public UserService() {
         userDAO = new UserDAO();
     }
@@ -32,7 +32,7 @@ public class UserService {
         try (Connection connection = connectionPool.getConnection()) {
             return userDAO.createUser(user,connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            loggerService.error("Failed to create new user",e);
         }
         return user;
     }
@@ -42,7 +42,7 @@ public class UserService {
         try (Connection connection = connectionPool.getConnection()) {
             return userDAO.findByLogin(username,connection);
         } catch (SQLException e) {
-            System.out.println("Failed to find");
+            loggerService.error("Failed to get user by login",e);
             return null;
         }
     }
@@ -52,7 +52,7 @@ public class UserService {
         try (Connection connection = connectionPool.getConnection()) {
             return userDAO.findById(id,connection);
         } catch (SQLException e) {
-            System.out.println("Failed to find");
+            loggerService.error("Failed to get user by id",e);
             return null;
         }
     }

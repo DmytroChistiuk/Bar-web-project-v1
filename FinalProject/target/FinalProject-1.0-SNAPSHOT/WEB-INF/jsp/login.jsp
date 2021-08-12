@@ -14,5 +14,9 @@
     <br>
     <button name="Submit" value="Login" type="Submit">Login</button>
 </form>
+    <p>Please push the button "Sign up", if you want register now.</p>
+<form>
+    <input type="button" value="Sign up" onClick='window.location.href="register"'>
+</form>
 </body>
 </html>

@@ -10,5 +10,9 @@
   <p>Welcome dear!</p>
   <p>Name : ${user.name}</p>
   <p>Surname : ${user.surname}</p>
+  <form>
+      <input type="button" value="View my bar" onClick='window.location.href="UserBar"'>
+      <input type="button" value="View all cocktails" onClick='window.location.href="cocktails"'>
+  </form>
 </body>
 </html>

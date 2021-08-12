@@ -18,6 +18,5 @@
     <a href="addToUserBar?cocktailId=${cocktail.cocktailId}">Save to my bar</a>
 </c:forEach>
 
-
 </body>
 </html>

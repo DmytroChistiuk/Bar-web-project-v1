@@ -3,6 +3,7 @@ package service;
 import dao.UserBarDAO;
 import entity.Cocktail;
 import entity.User;
+import org.apache.log4j.Logger;
 import util.ConnectionContext;
 import util.ConnectionPool;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import static dao.UserBarDAO.deleteCocktailFromUserBar;
 
 public class UserBarService {
+    private static final Logger loggerService = Logger.getLogger(UserBarService.class);
     private UserBarDAO userBarDAO = new UserBarDAO();
 
     public Cocktail addCocktail(int id, Cocktail cocktail) throws SQLException {
@@ -20,7 +22,7 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             return userBarDAO.addCocktailToUserBar(id, cocktail, connection);
         } catch (SQLException e) {
-            System.out.println("Failed to add");
+            loggerService.error("Failed to add",e);
             return null;
         }
     }
@@ -30,7 +32,7 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             return userBarDAO.findAllCocktailByUserBarId(id, connection);
         } catch (SQLException e) {
-            System.out.println("Failed to find");
+            loggerService.error("Failed to get user bar",e);
             return null;
         }
     }
@@ -40,8 +42,8 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             deleteCocktailFromUserBar(cocktail.getCocktailName(), user.getId(), connection);
         } catch (SQLException e) {
-            System.out.println("Failed to delete");
-        }
+            loggerService.error("Failed to delete cocktail",e);
+     }
         return null;
     }
 
@@ -55,7 +57,7 @@ public class UserBarService {
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
-            System.out.println("Failed to delete");
+            loggerService.error("Failed to delete dublicate cocktail",e);
         } finally {
             connection.setAutoCommit(true);
             connection.close();

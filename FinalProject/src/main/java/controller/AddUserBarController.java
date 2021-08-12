@@ -20,7 +20,6 @@ public class AddUserBarController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-
             String cocktailId = req.getParameter("cocktailId");
             Cocktail cocktail = cocktailService.getById(Integer.parseInt(cocktailId));
             Integer userId = (Integer) req.getSession().getAttribute("userId");
@@ -28,7 +27,6 @@ public class AddUserBarController implements Controller {
             userBarService.addCocktail(user.getId(), cocktail);
             List<Cocktail> cocktails = cocktailService.findAll();
             req.setAttribute("cocktails", cocktails);
-
             return new ControllerResultDto("cocktails");
         } catch (Exception e) {
             return new ControllerResultDto("error-500");

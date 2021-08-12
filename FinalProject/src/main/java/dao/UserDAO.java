@@ -2,34 +2,32 @@ package dao;
 
 import entity.User;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import util.ConnectionContext;
-import util.ConnectionPool;
-import util.MySQLUtil;
+import exception.DaoException;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger loggerDao = Logger.getLogger(UserDAO.class);
     private static final String QUERY_FIND_ALL = "SELECT name,surname,login,password,id FROM user";
     private static final String QUERY_FIND_BY_ID = "SELECT * FROM user where id = ?";
     private static final String INSERT_SQL = "INSERT INTO user (name,surname,login,password) VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM user WHERE id = ?";
     private static final String QUERY_FIND_BY_LOGIN = "SELECT * FROM user where login = ?";
 
-    public static void deleteUser(int id, Connection connection) throws SQLException {
+    public static void deleteUser(int id, Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
-            logger.error("Failed to delete user", e);
+            loggerDao.error("Failed to delete user", e);
+            throw new DaoException("Failed to delete user");
         }
     }
 
-    public User createUser(User user, Connection connection) {
+    public User createUser(User user, Connection connection) throws DaoException{
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
@@ -38,12 +36,12 @@ public class UserDAO {
             preparedStatement.executeUpdate();
             return user;
         } catch (SQLException e) {
-            logger.error("Failed to create user", e);
+            loggerDao.error("Failed to create user", e);
+            throw new DaoException("Failed to create user");
         }
-        return null;
     }
 
-    public User findById(int id, Connection connection) {
+    public User findById(int id, Connection connection) throws DaoException{
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
@@ -61,12 +59,13 @@ public class UserDAO {
             return null;
 
         } catch (SQLException e) {
-            logger.error("Failed find by id user", e);
+            loggerDao.error("Failed find by id user", e);
+            throw new DaoException("Failed find by id user");
         }
-        return null;
     }
 
-    public User findByLogin(String login, Connection connection) {
+    public User findByLogin(String login, Connection connection) throws DaoException{
+
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_LOGIN);
         ) {
             prepareStatement.setString(1, login);
@@ -84,13 +83,13 @@ public class UserDAO {
             return null;
 
         } catch (SQLException e) {
-            logger.error("Failed to find by login user", e);
+            loggerDao.error("Failed to find by login user", e);
+            throw new DaoException("Failed to find by login user");
         }
-        return null;
     }
 
 
-    public static List<User> findAll(Connection connection) {
+    public static List<User> findAll(Connection connection) throws DaoException{
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List<User> users = new ArrayList<>();
@@ -114,8 +113,8 @@ public class UserDAO {
             }
             return users;
         } catch (SQLException e) {
-            logger.error("Failed to find all users", e);
+            loggerDao.error("Failed to find all users", e);
+            throw new DaoException("Failed to find all users");
         }
-        return null;
     }
 }
