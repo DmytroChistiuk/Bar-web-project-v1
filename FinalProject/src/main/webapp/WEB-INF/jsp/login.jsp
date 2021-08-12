@@ -7,10 +7,10 @@
 </head>
 <body>
 <form method="post">
-    Please login
+    Please enter login and password
     <br>
-    <input type="text" name="login"/>
-    <input type="password" name="password"/>
+    <input type="text" value="Your login" name="login"/>
+    <input type="password" value="Your password" name="password"/>
     <br>
     <button name="Submit" value="Login" type="Submit">Login</button>
 </form>

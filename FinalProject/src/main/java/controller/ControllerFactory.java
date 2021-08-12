@@ -21,6 +21,8 @@ public class ControllerFactory {
         controllerMap.put("GET/UserBar", new ShowUserBarController());
         controllerMap.put("GET/register", new ShowPageController("register"));
         controllerMap.put("GET/addCocktail", new ShowPageController("addCocktail"));
+        controllerMap.put("GET/cocktailProfile", new ShowCocktailProfileController());
+        controllerMap.put("GET/viewCocktailProfile", new ShowCocktailProfileController());
 
         controllerMap.put("POST/addCocktail", (Controller) new CreateCocktailController());
         controllerMap.put("POST/register", (Controller) new RegisterController());

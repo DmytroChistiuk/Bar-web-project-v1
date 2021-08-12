@@ -12,10 +12,8 @@
 <c:forEach items="${cocktails}" var="cocktail">
     <br>
     <c:out value="${cocktail.cocktailName}"/>
-    <c:out value="${cocktail.recipe}"/>
-    <c:out value="${cocktail.cocktailType}"/>
-    <c:out value="${cocktail.cocktailHistory}"/>
     <a href="addToUserBar?cocktailId=${cocktail.cocktailId}">Save to my bar</a>
+    <a href="viewCocktailProfile?cocktailId=${cocktail.cocktailId}">View cocktail profile</a>
 </c:forEach>
 
 </body>

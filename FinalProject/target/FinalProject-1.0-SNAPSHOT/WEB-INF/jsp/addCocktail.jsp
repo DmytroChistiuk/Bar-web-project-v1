@@ -14,10 +14,10 @@
 <form method="post">
     Welcome to cocktail editor page! Please enter your cocktail.
     <br>
-    <input type="text" name="cocktailName"/>
-    <input type="text" name="recipe"/>
-    <input type="text" name="cocktailType"/>
-    <input type="text" name="cocktailHistory"/>
+    <input type="text" value="Cocktail name" name="cocktailName"/>
+    <input type="text" value="Recipe" name="recipe"/>
+    <input type="text" value="Cocktail type" name="cocktailType"/>
+    <input type="text" value="Cocktail History" name="cocktailHistory"/>
     <br>
     <button name="Submit" value="addCocktail" type="Submit">Create cocktail</button>
 

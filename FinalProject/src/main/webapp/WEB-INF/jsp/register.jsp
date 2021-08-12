@@ -12,12 +12,12 @@
 </head>
 <body>
 <form method="post">
-    Welcome to register page! Please register.
+    Welcome to register page! Please enter name, surname, login, password.
     <br>
-    <input type="text" name="name"/>
-    <input type="text" name="surname"/>
-    <input type="text" name="login"/>
-    <input type="password" name="password"/>
+    <input type="text" value="Your name" name="name"/>
+    <input type="text" value="Your surname" name="surname"/>
+    <input type="text" value="Your login" name="login"/>
+    <input type="password" value="Your password" name="password"/>
     <br>
     <button name="Submit" value="register" type="Submit">Register</button>
 </form>
