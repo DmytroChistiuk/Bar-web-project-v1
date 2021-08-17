@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class ShowAllCocktailController implements Controller {
-    CocktailService cocktailService = new CocktailService();
+  private CocktailService cocktailService = new CocktailService();
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
       List<Cocktail> cocktails = cocktailService.findAll();

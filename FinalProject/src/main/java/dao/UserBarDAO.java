@@ -13,18 +13,18 @@ import java.util.List;
 public class UserBarDAO {
     private static final Logger loggerDao = Logger.getLogger(UserBarDAO.class);
     private static final String QUERY_FIND_ALL = "" +
-            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history" +
+            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo" +
             " from user_bar" +
             " inner join user on user_bar.user_id=user.id" +
             " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name";
     private static final String QUERY_FIND_BY_ID = "" +
-            "select cocktail.cocktail_id, user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history" +
+            "select cocktail.cocktail_id, user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo" +
             " from user_bar " +
             "inner join user on user_bar.user_id=user.id " +
             "inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name " +
             "where user.id =?";
     private static final String QUERY_FIND_BY_NAME = "" +
-            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history"
+            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo"
             + " from user_bar" +
             " inner join user on user_bar.user_id=user.id" +
             " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name where user.name =?";
@@ -67,11 +67,17 @@ public class UserBarDAO {
                 String cocktailHistory = resultSet.getString("cocktail_history");
                 int cocktail_id = resultSet.getInt("cocktail_id");
                 String recipe = resultSet.getString("recipe");
+                String icon = resultSet.getString("icon");
+                String photo = resultSet.getString("photo");
+
                 cocktail.setCocktailName(cocktailName);
                 cocktail.setCocktailType(cocktailType);
                 cocktail.setCocktailHistory(cocktailHistory);
                 cocktail.setRecipe(recipe);
                 cocktail.setCocktailId(cocktail_id);
+                cocktail.setCocktailIcon(icon);
+                cocktail.setCocktailPhoto(photo);
+
                 cocktails.add(cocktail);
             }
             if (cocktails.isEmpty()) {
@@ -95,11 +101,19 @@ public class UserBarDAO {
                 String cocktailName = resultSet.getString("cocktail_name");
                 String cocktailType = resultSet.getString("cocktail_type");
                 String cocktailHistory = resultSet.getString("cocktail_history");
+                int cocktail_id = resultSet.getInt("cocktail_id");
                 String recipe = resultSet.getString("recipe");
+                String icon = resultSet.getString("icon");
+                String photo = resultSet.getString("photo");
+
                 cocktail.setCocktailName(cocktailName);
                 cocktail.setCocktailType(cocktailType);
                 cocktail.setCocktailHistory(cocktailHistory);
                 cocktail.setRecipe(recipe);
+                cocktail.setCocktailId(cocktail_id);
+                cocktail.setCocktailIcon(icon);
+                cocktail.setCocktailPhoto(photo);
+
                 cocktails.add(cocktail);
             }
             return cocktails;

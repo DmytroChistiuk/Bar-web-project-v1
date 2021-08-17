@@ -23,10 +23,13 @@ public class ControllerFactory {
         controllerMap.put("GET/addCocktail", new ShowPageController("addCocktail"));
         controllerMap.put("GET/cocktailProfile", new ShowCocktailProfileController());
         controllerMap.put("GET/viewCocktailProfile", new ShowCocktailProfileController());
+        controllerMap.put("GET/allIngredients", new ShowAllIngredientsController());
+        controllerMap.put("GET/SearchCocktailsByIngredient", new AllCocktailsByIngredient());
 
         controllerMap.put("POST/addCocktail", (Controller) new CreateCocktailController());
         controllerMap.put("POST/register", (Controller) new RegisterController());
         controllerMap.put("POST/login", (Controller) new LoginController());
+
 
     }
 

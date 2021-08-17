@@ -31,6 +31,8 @@ public class CocktailServiceTest {
         testCocktail1.setCocktailType("1");
         testCocktail1.setCocktailHistory("1");
         testCocktail1.setRecipe("1");
+        testCocktail1.setCocktailIcon("1");
+        testCocktail1.setCocktailPhoto("1");
 
         when(cocktailDAO.findAllCocktails(any())).thenReturn(testList);
         List<Cocktail> currentList = cocktailService.findAll();
@@ -39,6 +41,8 @@ public class CocktailServiceTest {
             assertEquals(cocktail.getCocktailName(),testCocktail1.getCocktailName());
             assertEquals(cocktail.getCocktailType(),testCocktail1.getCocktailType());
             assertEquals(cocktail.getRecipe(),testCocktail1.getRecipe());
+            assertEquals(cocktail.getCocktailIcon(),testCocktail1.getCocktailIcon());
+            assertEquals(cocktail.getCocktailPhoto(),testCocktail1.getCocktailPhoto());
         }
 
 
@@ -57,6 +61,8 @@ public class CocktailServiceTest {
         testCocktail.setCocktailType("2");
         testCocktail.setCocktailHistory("3");
         testCocktail.setRecipe("5");
+        testCocktail.setCocktailIcon("6");
+        testCocktail.setCocktailPhoto("7");
 
         when(cocktailDAO.findById(eq(1), any())).thenReturn(testCocktail);
         Cocktail current = cocktailService.getById(1);
@@ -96,6 +102,8 @@ public class CocktailServiceTest {
         testCocktail.setCocktailType("2");
         testCocktail.setCocktailHistory("3");
         testCocktail.setRecipe("5");
+        testCocktail.setCocktailIcon("6");
+        testCocktail.setCocktailPhoto("7");
 
         when(cocktailDAO.findById(eq(1), any())).thenReturn(testCocktail);
         cocktailService.getById(1);
@@ -115,6 +123,8 @@ public class CocktailServiceTest {
         testCocktail.setCocktailType("2");
         testCocktail.setCocktailHistory("3");
         testCocktail.setRecipe("5");
+        testCocktail.setCocktailIcon("6");
+        testCocktail.setCocktailPhoto("7");
 
         cocktailService.delete(1);
         verify(cocktailDAO, times(1)).deleteCocktail(eq(1), any());

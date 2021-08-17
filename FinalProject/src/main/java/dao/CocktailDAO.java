@@ -10,10 +10,11 @@ import java.util.List;
 
 public class CocktailDAO {
     private static final Logger loggerDao = Logger.getLogger(CocktailDAO.class);
-    private static final String FILDS = "cocktail_name, cocktail_type, cocktail_history, recipe";
-    private static final String QUERY_FIND_ALL = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe FROM cocktail";
-    private static final String QUERY_FIND_BY_ID = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe FROM cocktail where cocktail_id = ?";
-    private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?)";
+    private static final String FILDS = "cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo";
+    private static final String QUERY_FIND_ALL = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail";
+    private static final String QUERY_FIND_BY_ID = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_id = ?";
+    private static final String QUERY_FIND_BY_NAME = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_name = ?";
+    private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
     public void deleteCocktail(int id, Connection connection) throws  DaoException{
@@ -32,6 +33,8 @@ public class CocktailDAO {
             preparedStatement.setString(2, cocktail.getRecipe());
             preparedStatement.setString(3, cocktail.getCocktailType());
             preparedStatement.setString(4, cocktail.getCocktailHistory());
+            preparedStatement.setString(5, cocktail.getCocktailIcon());
+            preparedStatement.setString(6, cocktail.getCocktailPhoto());
 
             preparedStatement.executeUpdate();
             return cocktail;
@@ -53,6 +56,8 @@ public class CocktailDAO {
                 cocktail.setCocktailType(resultSet.getString("cocktail_type"));
                 cocktail.setCocktailHistory(resultSet.getString("cocktail_history"));
                 cocktail.setRecipe(resultSet.getString("recipe"));
+                cocktail.setCocktailIcon(resultSet.getString("icon"));
+                cocktail.setCocktailPhoto(resultSet.getString("photo"));
                 return cocktail;
             }
             return null;
@@ -63,6 +68,29 @@ public class CocktailDAO {
         }
     }
 
+    public Cocktail findByName(String name, Connection connection) throws  DaoException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
+        ) {
+            prepareStatement.setString(1, name);
+            ResultSet resultSet = prepareStatement.executeQuery();
+            if (resultSet.next()) {
+                Cocktail cocktail = new Cocktail();
+                cocktail.setCocktailId(resultSet.getInt("cocktail_id"));
+                cocktail.setCocktailName(resultSet.getString("cocktail_name"));
+                cocktail.setCocktailType(resultSet.getString("cocktail_type"));
+                cocktail.setCocktailHistory(resultSet.getString("cocktail_history"));
+                cocktail.setRecipe(resultSet.getString("recipe"));
+                cocktail.setCocktailIcon(resultSet.getString("icon"));
+                cocktail.setCocktailPhoto(resultSet.getString("photo"));
+                return cocktail;
+            }
+            return null;
+
+        } catch (SQLException e) {
+            loggerDao.error("Failed to find cocktail by name", e);
+            throw new DaoException("Failed to find cocktail by name");
+        }
+    }
 
     public List<Cocktail> findAllCocktails(Connection connection) throws  DaoException{
 
@@ -78,12 +106,16 @@ public class CocktailDAO {
                 String cocktailType = resultSet.getString("cocktail_type");
                 String cocktailHistory = resultSet.getString("cocktail_history");
                 String recipe = resultSet.getString("recipe");
+                String icon = resultSet.getString("icon");
+                String photo = resultSet.getString("photo");
 
                 cocktail.setCocktailId(cocktailId);
                 cocktail.setCocktailName(cocktailName);
                 cocktail.setCocktailType(cocktailType);
                 cocktail.setCocktailHistory(cocktailHistory);
                 cocktail.setRecipe(recipe);
+                cocktail.setCocktailIcon(icon);
+                cocktail.setCocktailPhoto(photo);
 
                 cocktails.add(cocktail);
             }

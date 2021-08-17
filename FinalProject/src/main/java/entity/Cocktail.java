@@ -6,6 +6,8 @@ public class Cocktail {
     private String recipe;
     private String cocktailType;
     private String cocktailHistory;
+    private String cocktailIcon;
+    private String cocktailPhoto;
 
     public int getCocktailId() {
         return cocktailId;
@@ -45,6 +47,22 @@ public class Cocktail {
 
     public void setCocktailHistory(String cocktailHistory) {
         this.cocktailHistory = cocktailHistory;
+    }
+
+    public String getCocktailIcon() {
+        return cocktailIcon;
+    }
+
+    public void setCocktailIcon(String cocktailIcon) {
+        this.cocktailIcon = cocktailIcon;
+    }
+
+    public String getCocktailPhoto() {
+        return cocktailPhoto;
+    }
+
+    public void setCocktailPhoto(String cocktailPhoto) {
+        this.cocktailPhoto = cocktailPhoto;
     }
 
     @Override

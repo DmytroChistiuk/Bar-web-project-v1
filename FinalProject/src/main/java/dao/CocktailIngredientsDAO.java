@@ -25,8 +25,13 @@ public class CocktailIngredientsDAO {
             " from cocktail_ingredient"+
             " inner join ingredients on cocktail_ingredient.ingredient_id = ingredients.ingredient_id"+
             " inner join cocktail on cocktail_ingredient.cocktail_id = cocktail.cocktail_id where cocktail.cocktail_name = ?";
-
-    public HashMap<String, List<CocktailIngredients>> findByCocktailName(String name, Connection connection) throws DaoException {
+    private static final String QUERY_FIND_BY_INGREDIENTNAME ="" +
+            "select cocktail.cocktail_name, ingredients.name"+
+            " from cocktail_ingredient"+
+            " inner join cocktail on cocktail_ingredient.cocktail_id = cocktail.cocktail_id"+
+            " inner join ingredients on cocktail_ingredient.ingredient_id = ingredients.ingredient_id WHERE ingredients.name = ?";
+    private static final String QUERY_INSERT ="INSERT INTO cocktail_ingredient (cocktail_id, ingredient_id) VALUES(?, ?)";
+    public HashMap<String, List<CocktailIngredients>> findAllIngredientsByCocktailName(String name, Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_СOCKTAILNAME);
         ) {
             prepareStatement.setString(1, name);
@@ -42,13 +47,33 @@ public class CocktailIngredientsDAO {
             return cocktail;
 
         } catch (SQLException e) {
-            loggerDao.error("Failed to find cocktails ingredient by name", e);
-            throw new DaoException("Failed to find cocktails ingredient by name");
+            loggerDao.error("Failed to find all ingredients by cocktail name", e);
+            throw new DaoException("Failed to find all ingredients by cocktail name");
+        }
+    }
+
+    public HashMap<String, List<CocktailIngredients>> findAllCocktailsByIngredientName(String name, Connection connection) throws DaoException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_INGREDIENTNAME)) {
+            prepareStatement.setString(1, name);
+            ResultSet resultSet = prepareStatement.executeQuery();
+            List<CocktailIngredients> cocktailIngredients = new ArrayList<>();
+            HashMap<String, List<CocktailIngredients>> ingredients = new HashMap<>();
+            while (resultSet.next()) {
+                CocktailIngredients ingredientsOfCocktail = new CocktailIngredients();
+                ingredientsOfCocktail.setCocktailName(resultSet.getString("cocktail_name"));
+                cocktailIngredients.add(ingredientsOfCocktail);
+            }
+            ingredients.put(name, cocktailIngredients);
+            return ingredients;
+
+        } catch (SQLException e) {
+            loggerDao.error("Failed to find all cocktails by ingredient name", e);
+            throw new DaoException("Failed to find all cocktails by ingredient name");
         }
     }
 
 
-    public static List<CocktailIngredients> findAll(Connection connection) throws DaoException {
+    public  List<CocktailIngredients> findAll(Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List<CocktailIngredients> cocktailIngredients = new ArrayList<>();
@@ -70,6 +95,15 @@ public class CocktailIngredientsDAO {
         } catch (SQLException e) {
             loggerDao.error("Failed to find all cocktails ingredient in all cocktails", e);
             throw new DaoException("Failed to find all cocktails ingredient in all cocktails");
+        }
+    }
+    public void create(int cocktailId, int ingredientId, Connection connection){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT)) {
+            preparedStatement.setInt(1, cocktailId);
+            preparedStatement.setInt(2, ingredientId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            loggerDao.error("Set chain cocktailID -> ingredientID", e);
         }
     }
 }

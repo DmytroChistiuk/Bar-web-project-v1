@@ -40,9 +40,7 @@ public class CocktailIngredients {
 
     @Override
     public String toString() {
-        return "CocktailIngredients{" +
-                "cocktailName='" + cocktailName + '\'' +
-                ", ingredientName='" + ingredientName + '\'' +
-                '}';
+        return  ingredientName;
+
     }
 }

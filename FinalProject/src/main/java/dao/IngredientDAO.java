@@ -10,12 +10,13 @@ import java.util.List;
 
 public class IngredientDAO {
     private static final Logger loggerDao = Logger.getLogger(IngredientDAO.class);
-    private static final String QUERY_FIND_ALL = "SELECT name FROM ingredients";
+    private static final String QUERY_FIND_ALL = "SELECT name,ingredient_id FROM ingredients";
     private static final String QUERY_FIND_BY_ID = "SELECT name FROM ingredients where ingredient_id = ?";
-    private static final String INSERT_SQL = "INSERT INTO ingredients name VALUES(?)";
+    private static final String INSERT_SQL = "INSERT INTO ingredients (name) VALUES(?)";
     private static final String DELETE = "DELETE FROM ingredients WHERE ingredient_id = ?";
+    private static final String QUERY_FIND_BY_NAME = "SELECT name,ingredient_id FROM ingredients where name = ?";
 
-    public static void deleteIngredient(int id, Connection connection) throws DaoException {
+    public void deleteIngredient(int id, Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
@@ -25,9 +26,8 @@ public class IngredientDAO {
         }
     }
 
-
     public Ingredient createIngredient(Ingredient ingredient, Connection connection) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
             preparedStatement.setString(1, ingredient.getName());
             preparedStatement.executeUpdate();
             return ingredient;
@@ -56,17 +56,36 @@ public class IngredientDAO {
         }
     }
 
+    public Ingredient findByName(String name, Connection connection) throws DaoException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
+        ) {
+            prepareStatement.setString(1, name);
+            ResultSet resultSet = prepareStatement.executeQuery();
+            if (resultSet.next()) {
+                Ingredient cocktail = new Ingredient();
+                cocktail.setName(resultSet.getString("name"));
+                cocktail.setIngredientId(resultSet.getInt("ingredient_id"));
+                return cocktail;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            loggerDao.error("Failed to find cocktail by name", e);
+            throw new DaoException("Failed to find cocktail by name");
+        }
+    }
 
-    public static List<Ingredient> findAll(Connection connection) throws DaoException {
+    public List<Ingredient> findAllIngredients(Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
             List<Ingredient> ingredients = new ArrayList<>();
 
             while (resultSet.next()) {
                 Ingredient ingredient = new Ingredient();
-
+                int id = resultSet.getInt("ingredient_id");
                 String name = resultSet.getString("name");
                 ingredient.setName(name);
+                ingredient.setIngredientId(id);
 
                 ingredients.add(ingredient);
             }

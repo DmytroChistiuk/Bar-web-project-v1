@@ -30,12 +30,14 @@ public class CocktailService {
         }
     }
 
-    public Cocktail create(String cocktailName, String recipe, String cocktailType, String cocktailHistory) throws SQLException {
+    public Cocktail create(String cocktailName, String recipe, String cocktailType, String cocktailHistory, String icon, String photo) throws SQLException {
         Cocktail cocktail = new Cocktail();
         cocktail.setCocktailName(cocktailName);
         cocktail.setRecipe(recipe);
         cocktail.setCocktailType(cocktailType);
         cocktail.setCocktailHistory(cocktailHistory);
+        cocktail.setCocktailIcon(icon);
+        cocktail.setCocktailPhoto(photo);
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
             return cocktailDAO.createCocktail(cocktail,connection);
@@ -54,6 +56,15 @@ public class CocktailService {
             return null;
         }
     }
+    public Cocktail getByName(String name) throws SQLException {
+        ConnectionPool connectionPool = ConnectionContext.get();
+        try (Connection connection = connectionPool.getConnection()) {
+            return cocktailDAO.findByName(name, connection);
+        } catch (SQLException e) {
+            loggerService.error("Failed to get by id",e);
+            return null;
+        }
+    }
 
     public List<Cocktail> findAll() throws SQLException {
         ConnectionPool connectionPool = ConnectionContext.get();
@@ -63,5 +74,18 @@ public class CocktailService {
             loggerService.error("Failed to find All",e);
             return null;
         }
+    }
+    public boolean checkCocktailInDatebase(String name){
+        try {
+            List<Cocktail> allCocktails = findAll();
+            for (Cocktail cocktail : allCocktails) {
+                if(cocktail.getCocktailName().equals(name)){
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
