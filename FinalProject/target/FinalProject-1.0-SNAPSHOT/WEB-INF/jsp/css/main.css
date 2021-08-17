@@ -1,0 +1,147 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin: 0;
+	background-color: #FDD2BF;
+}
+
+div[class^="col"] 
+{
+	outline: 2px solid black;
+}
+
+
+/*------------------------------AUTH STYLES-------------------------------*/
+
+.sbtn {
+	width: 100%;
+	color: white;
+    border-radius: 4px;
+    padding: 12px 25px;
+    margin: 5px 0px 0px 0px;
+	border: 0px solid black;
+	outline: 0px solid black;
+	background-color: #FF6B6B;
+}
+
+.sbtn:hover {
+	background-color: #B61919;
+}
+
+.auth-back {
+	position: absolute;
+	top: calc(50% - 180px);
+	/*- 365.61px*/
+	left: calc(50% - 182px);
+	/*- 364px*/
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	
+	padding: 60px 20px 0px 20px;
+	color: #ffffff;
+	background-color: #00305B;
+	border-radius: 4px;
+}
+
+.auth-img {
+	width: 100px;
+	border-radius: 50%;
+	
+	position: absolute;
+	top: calc(0px - 50px);
+	border: 5px solid #00305B;
+}
+
+.signup-btn {
+	color: #FF6B6B;
+	display: inline;
+	padding: 0px;
+	background-color: #00305B;
+	border: 0px solid black;
+	outline: 0px solid black;
+}
+
+.signup-btn:hover {
+	color: #B61919;
+}
+
+.auth-back input[type=text], .auth-back input[type=password] {
+	width: 100%;
+	padding: 10px 25px;
+    margin: 5px 0px 5px 0px;
+	border-radius: 4px;
+	border: 0px solid black;
+	outline: 0px solid black;
+}
+
+/*------------------------------HEADER------------------------------*/
+
+.main-header {
+	position: fixed;
+	width: 100%;
+	height: 80px;
+	background-color: #00305B;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.main-header ul {
+	height: 100%;
+	padding: 0px;
+	margin: 0px 10px 0px 10px;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center
+}
+
+.main-header ul li {
+	display: inline;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.main-header ul li {
+	background-color: transparent;
+	color: #ffffff;
+	padding: 0px 15px;
+	margin: 0px;
+	height: 100%;
+	outline: 0px solid black;
+	border: 0px solid black;
+	
+	display: flex;
+	align-items: center;
+}
+
+.main-header ul li:hover {
+	background-color: #FF6B6B;
+}
+
+.main-content {
+	position: fixed;
+	top: 80px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+.main-content-wrapper {
+	padding: 20px;
+	width: 1032px;
+	height: 100%;
+	margin: 0px auto;
+	background-color: #512D6D;
+}
+
+.main-content-wrapper span {
+	font-size: 16px;
+	color: #ffffff;
+}

@@ -15,6 +15,9 @@ public class ShowProfileController implements Controller {
         User user = userService.getById(userId);
         req.setAttribute("login",user.getLogin());
         req.setAttribute("password", user.getPassword());
+      //  if(user.getRole().equals("admin")){
+      //  return new ControllerResultDto("adminProfile");
+      //  }
         return new ControllerResultDto("profile");
     }
 }

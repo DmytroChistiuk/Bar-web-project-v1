@@ -28,6 +28,7 @@ public class UserService {
         user.setSurname(surname);
         user.setLogin(login);
         user.setPassword(getSha256(password));
+        user.setRole("user");
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
             return userDAO.createUser(user,connection);

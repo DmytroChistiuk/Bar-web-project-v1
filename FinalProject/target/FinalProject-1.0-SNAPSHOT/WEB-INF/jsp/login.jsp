@@ -8,51 +8,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
             crossorigin="anonymous"></script>
-    <title>Title</title>
-    <style type="text/css">
-    body{
-        margin: 0;
-        background-image: url(background/2.jpg);
-        background-repeat: no-repeat;
-    }
-</style>
-
+	<!--connect css file-->
+	<link rel="stylesheet" href="css/main.css">
+    <title>Авторизация</title>
+	<style>
+        <%@include file='css/main.css' %>
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-        <form method="post">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        Please enter login and password
-        <br>
-        <input type="text" value="Your login" name="login"/>
-        <input type="password" value="Your password" name="password"/>
-        <br>
-        <button name="Submit" value="Login" type="Submit">Login</button>
-        </form>
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-        <p>Please push the button "Sign up", if you want register now.</p>
-        <form>
-            <input type="button" value="Sign up" onClick='window.location.href="register"'>
-        </form>
-            <div class="col-md-4">
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="auth-back">
+		<img class="auth-img" src="${pageContext.request.contextPath}/img/logo.jpg" alt="logo">
+    	<form method="post">
+			<label for="login">Enter your login</label><br>
+		  	<input type="text" value="" name="login" id="login"/>
+			<br>
+			<label for="password">Enter your password</label><br>
+			<input type="password" value="" name="password" id="password"/>
+			<button class="sbtn" name="Submit" value="Login" type="Submit">Log in</button>
+		</form>
+		<p>
+			<form>
+		  		<input class="signup-btn" type="button" value="Sign up" onClick='window.location.href="register"'> if you don't have an account
+			</form>
+		</p>
+	</div>
 </body>
 </html>

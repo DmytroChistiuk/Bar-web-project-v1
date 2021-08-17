@@ -8,6 +8,7 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    private String role;
 
     @Override
     public boolean equals(Object o) {
@@ -18,13 +19,16 @@ public class User {
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password);
+                Objects.equals(password, user.password) &&
+                Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, login, password);
+        return Objects.hash(id, name, surname, login, password, role);
     }
+
+
 
     public int getId() {
         return id;
@@ -66,6 +70,13 @@ public class User {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -74,6 +85,7 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

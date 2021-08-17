@@ -25,7 +25,7 @@ public class RegisterController implements Controller {
 
        else {
         req.setAttribute("user", user);
-        return new ControllerResultDto("profile");
+        return new ControllerResultDto("login");
 
         }
     }

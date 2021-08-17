@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%--@elvariable id="user" type="com.company.entity.Cocktail"--%>
+<%--@elvariable id="user" type="com.company.entity.User"--%>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -9,15 +8,16 @@
     <title>Profile</title>
 </head>
 <body>
-<a href="UserBar">View my bar</a>
-<br>
-<c:forEach items="${cocktails}" var="cocktail">
-    <br>
-    <c:out value="${cocktail.cocktailName}"/>
-    <img src="${pageContext.request.contextPath}${cocktail.cocktailIcon}"/>
-    <a href="addToUserBar?cocktailId=${cocktail.cocktailId}">Save to my bar</a>
-    <a href="viewCocktailProfile?cocktailId=${cocktail.cocktailId}">View cocktail profile</a>
-</c:forEach>
+<p>Welcome dear!</p>
+<p>Name : ${user.name}</p>
+<p>Surname : ${user.surname}</p>
+<p>Login : ${user.login}</p>
+<p>Role : ${user.role}</p>
 
+<form>
+    <input type="button" value="View my bar" onClick='window.location.href="UserBar"'>
+    <input type="button" value="View all cocktails" onClick='window.location.href="cocktails"'>
+    <input type="button" value="Create cocktail" onClick='window.location.href="addCocktail"'>
+</form>
 </body>
 </html>

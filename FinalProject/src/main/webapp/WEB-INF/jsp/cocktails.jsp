@@ -10,7 +10,7 @@
 </head>
 <body>
 <a href="UserBar">View my bar</a>
-
+<br>
 <c:forEach items="${cocktails}" var="cocktail">
     <br>
     <c:out value="${cocktail.cocktailName}"/>

@@ -10,18 +10,35 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <title>Register</title>
+	<!--connect css file-->
+	<link rel="stylesheet" href="css/main.css">
+	<style>
+        <%@include file='css/main.css' %>
+    </style>
+	<title>Sign in</title>
 </head>
 <body>
-<form method="post">
-    Welcome to register page! Please enter name, surname, login, password.
-    <br>
-    <input type="text" value="Your name" name="name"/>
-    <input type="text" value="Your surname" name="surname"/>
-    <input type="text" value="Your login" name="login"/>
-    <input type="password" value="Your password" name="password"/>
-    <br>
-    <button name="Submit" value="register" type="Submit">Register</button>
-</form>
+	<div class="auth-back">
+		<img class="auth-img" src="${pageContext.request.contextPath}/img/logo.jpg" alt="logo">
+    	<form method="post">
+			<label for="name">First name</label><br>
+		  	<input type="text" value="" name="name" id="name"/>
+			<br>
+			<label for="surname">Surname</label><br>
+		  	<input type="text" value="" name="surname" id="surname"/>
+			<br>
+			<label for="login">Login</label><br>
+		  	<input type="text" value="" name="login" id="login"/>
+			<br>
+			<label for="password">Password</label><br>
+			<input type="password" value="" name="password" id="password"/>
+			<button class="sbtn" name="Submit" value="register" type="Submit">Sign in</button>
+		</form>
+		<p>
+			<form>
+		  		<input class="signup-btn" type="button" value="Sign up" onClick='window.location.href="register"'> if you don't have an account
+			</form>
+		</p>
+	</div>
 </body>
 </html>
