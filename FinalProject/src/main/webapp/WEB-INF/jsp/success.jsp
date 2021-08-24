@@ -12,5 +12,7 @@
 </head>
 <body>
 Action was success.
+<br>
+<a onClick='window.location.href="profile"'>Back to profile</a>
 </body>
 </html>

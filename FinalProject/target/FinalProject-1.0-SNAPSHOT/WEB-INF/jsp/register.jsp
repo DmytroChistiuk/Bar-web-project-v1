@@ -32,13 +32,8 @@
 			<br>
 			<label for="password">Password</label><br>
 			<input type="password" value="" name="password" id="password"/>
-			<button class="sbtn" name="Submit" value="register" type="Submit">Sign in</button>
+			<button class="sbtn" name="Submit" value="Register" type="Submit">Sign in</button>
 		</form>
-		<p>
-			<form>
-		  		<input class="signup-btn" type="button" value="Sign up" onClick='window.location.href="register"'> if you don't have an account
-			</form>
-		</p>
 	</div>
 </body>
 </html>

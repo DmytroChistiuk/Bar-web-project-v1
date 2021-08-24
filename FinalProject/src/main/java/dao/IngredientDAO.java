@@ -9,30 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientDAO {
-    private static final Logger loggerDao = Logger.getLogger(IngredientDAO.class);
+    private static final Logger logger = Logger.getLogger(IngredientDAO.class);
     private static final String QUERY_FIND_ALL = "SELECT name,ingredient_id FROM ingredients";
-    private static final String QUERY_FIND_BY_ID = "SELECT name FROM ingredients where ingredient_id = ?";
-    private static final String INSERT_SQL = "INSERT INTO ingredients (name) VALUES(?)";
-    private static final String DELETE = "DELETE FROM ingredients WHERE ingredient_id = ?";
+    private static final String QUERY_FIND_BY_ID = "SELECT name,ingredient_id FROM ingredients where ingredient_id = ?";
+    private static final String QUERY_INSERT = "INSERT INTO ingredients (name) VALUES(?)";
     private static final String QUERY_FIND_BY_NAME = "SELECT name,ingredient_id FROM ingredients where name = ?";
 
-    public void deleteIngredient(int id, Connection connection) throws DaoException {
-        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
-            prepareStatement.setLong(1, id);
-            prepareStatement.executeUpdate();
-        } catch (Exception e) {
-            loggerDao.error("Failed to delete ingredient", e);
-            throw new DaoException("Failed to delete ingredient");
-        }
-    }
-
     public Ingredient createIngredient(Ingredient ingredient, Connection connection) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT)) {
             preparedStatement.setString(1, ingredient.getName());
             preparedStatement.executeUpdate();
             return ingredient;
         } catch (SQLException e) {
-            loggerDao.error("Failed to create cocktail", e);
+            logger.error("Failed to create cocktail", e);
             throw new DaoException("Failed to create cocktail");
         }
     }
@@ -43,15 +32,15 @@ public class IngredientDAO {
             prepareStatement.setLong(1, id);
             ResultSet resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
-                Ingredient cocktail = new Ingredient();
-                cocktail.setName(resultSet.getString("name"));
-
-                return cocktail;
+                Ingredient ingredient = new Ingredient();
+                ingredient.setName(resultSet.getString("name"));
+                ingredient.setIngredientId(resultSet.getInt("ingredient_id"));
+                return ingredient;
             } else {
                 return null;
             }
         } catch (SQLException e) {
-            loggerDao.error("Failed to find cocktail by id", e);
+            logger.error("Failed to find cocktail by id", e);
             throw new DaoException("Failed to find cocktail by id");
         }
     }
@@ -70,7 +59,7 @@ public class IngredientDAO {
                 return null;
             }
         } catch (SQLException e) {
-            loggerDao.error("Failed to find cocktail by name", e);
+            logger.error("Failed to find cocktail by name", e);
             throw new DaoException("Failed to find cocktail by name");
         }
     }
@@ -91,7 +80,7 @@ public class IngredientDAO {
             }
             return ingredients;
         } catch (SQLException e) {
-            loggerDao.error("Failed to find all cocktail ingredient", e);
+            logger.error("Failed to find all cocktail ingredient", e);
             throw new DaoException("Failed to find all cocktail ingredient");
         }
     }

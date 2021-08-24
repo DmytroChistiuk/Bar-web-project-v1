@@ -12,7 +12,8 @@ import java.util.List;
 
 public class CocktailService {
     private CocktailDAO cocktailDAO;
-    private static final Logger loggerService = Logger.getLogger(CocktailService.class);
+    private static final Logger logger = Logger.getLogger(CocktailService.class);
+
     public CocktailService(CocktailDAO cocktailDAO) {
         this.cocktailDAO = cocktailDAO;
     }
@@ -26,7 +27,7 @@ public class CocktailService {
         try (Connection connection = connectionPool.getConnection()) {
             cocktailDAO.deleteCocktail(id, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to find",e);
+            logger.error("Failed to delete cocktail", e);
         }
     }
 
@@ -38,11 +39,12 @@ public class CocktailService {
         cocktail.setCocktailHistory(cocktailHistory);
         cocktail.setCocktailIcon(icon);
         cocktail.setCocktailPhoto(photo);
+
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
-            return cocktailDAO.createCocktail(cocktail,connection);
+            return cocktailDAO.createCocktail(cocktail, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to create",e);
+            logger.error("Failed to create cocktail", e);
             return null;
         }
     }
@@ -52,16 +54,17 @@ public class CocktailService {
         try (Connection connection = connectionPool.getConnection()) {
             return cocktailDAO.findById(id, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get by id",e);
+            logger.error("Failed to get cocktail by id", e);
             return null;
         }
     }
+
     public Cocktail getByName(String name) throws SQLException {
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
             return cocktailDAO.findByName(name, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get by id",e);
+            logger.error("Failed to get cocktail by name", e);
             return null;
         }
     }
@@ -71,20 +74,22 @@ public class CocktailService {
         try (Connection connection = connectionPool.getConnection()) {
             return cocktailDAO.findAllCocktails(connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to find All",e);
+            logger.error("Failed to find all cocktails", e);
             return null;
         }
     }
-    public boolean checkCocktailInDatebase(String name){
+
+    public boolean checkCocktailInDatabase(String name) {
         try {
             List<Cocktail> allCocktails = findAll();
             for (Cocktail cocktail : allCocktails) {
-                if(cocktail.getCocktailName().equals(name)){
+                if (cocktail.getCocktailName().equals(name)) {
                     return true;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to check is cocktail exist", e);
+            return false;
         }
         return false;
     }

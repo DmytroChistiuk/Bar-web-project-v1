@@ -11,6 +11,10 @@
 <body>
 <a href="UserBar">View my bar</a>
 <br>
+<form method="post">
+    <input type="text" value="Type cocktail name" name="cocktailName"/>
+    <button name="Submit" value="findCocktail" type="Submit">Search</button>
+    </form>
 <c:forEach items="${cocktails}" var="cocktail">
     <br>
     <c:out value="${cocktail.cocktailName}"/>

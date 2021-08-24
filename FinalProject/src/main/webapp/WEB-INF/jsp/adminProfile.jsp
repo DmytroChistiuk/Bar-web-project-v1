@@ -13,10 +13,15 @@
 <p>Surname : ${user.surname}</p>
 <p>Login : ${user.login}</p>
 <p>Role : ${user.role}</p>
-
+<p>Users setting:</p>
+<c:forEach items="${users}" var="userFromList">
+    <c:out value="${userFromList.name}"/> - <c:out value="${userFromList.role}"/>
+    <a href="changeRole?id=${userFromList.id}">Change role</a>
+    <br>
+</c:forEach>
 <form>
     <input type="button" value="View my bar" onClick='window.location.href="UserBar"'>
-    <input type="button" value="View all cocktails" onClick='window.location.href="cocktails"'>
+    <input type="button" value="View all cocktails" onClick='window.location.href="allCocktails"'>
     <input type="button" value="Create cocktail" onClick='window.location.href="addCocktail"'>
 </form>
 </body>

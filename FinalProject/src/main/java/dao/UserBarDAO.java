@@ -7,16 +7,10 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class UserBarDAO {
-    private static final Logger loggerDao = Logger.getLogger(UserBarDAO.class);
-    private static final String QUERY_FIND_ALL = "" +
-            "select user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo" +
-            " from user_bar" +
-            " inner join user on user_bar.user_id=user.id" +
-            " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name";
+    private static final Logger logger = Logger.getLogger(UserBarDAO.class);
     private static final String QUERY_FIND_BY_ID = "" +
             "select cocktail.cocktail_id, user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo" +
             " from user_bar " +
@@ -28,29 +22,29 @@ public class UserBarDAO {
             + " from user_bar" +
             " inner join user on user_bar.user_id=user.id" +
             " inner join cocktail on user_bar.cocktail_name=cocktail.cocktail_name where user.name =?";
-    private static final String INSERT_SQL = "INSERT INTO user_bar VALUES(?, ?)";
-    private static final String DELETE = "DELETE FROM user_bar WHERE cocktail_name = ? AND user_id = ?";
+    private static final String QUERY_INSERT = "INSERT INTO user_bar VALUES(?, ?)";
+    private static final String QUERY_DELETE = "DELETE FROM user_bar WHERE cocktail_name = ? AND user_id = ?";
 
     public static void deleteCocktailFromUserBar(String name, int id, Connection connection) throws DaoException {
-        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_DELETE)) {
             prepareStatement.setString(1, name);
             prepareStatement.setInt(2, id);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
-            loggerDao.error("Failed to delete cocktail from user bar", e);
-            throw new DaoException("Failed to delete cocktail from user bar");
+            logger.error("Failed to delete cocktail from user's bar", e);
+            throw new DaoException("Failed to delete cocktail from user's bar");
         }
     }
 
     public Cocktail addCocktailToUserBar(int id, Cocktail cocktail, Connection connection) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, cocktail.getCocktailName());
             preparedStatement.executeUpdate();
             return cocktail;
         } catch (SQLException e) {
-            loggerDao.error("Failed to add cocktail to user bar", e);
-            throw new DaoException("Failed to add cocktail to user bar");
+            logger.error("Failed to add cocktail to user's bar", e);
+            throw new DaoException("Failed to add cocktail to user's bar");
         }
     }
 
@@ -86,8 +80,8 @@ public class UserBarDAO {
                 return cocktails;
             }
         } catch (SQLException e) {
-            loggerDao.error("Failed to find all cocktail from user bar by id", e);
-            throw new DaoException("Failed to find all cocktail from user bar by id");
+            logger.error("Failed to find all cocktail from user's bar by id", e);
+            throw new DaoException("Failed to find all cocktail from user's bar by id");
         }
     }
 
@@ -118,28 +112,8 @@ public class UserBarDAO {
             }
             return cocktails;
         } catch (SQLException e) {
-            loggerDao.error("Failed to find all cocktail from user bar by name", e);
-            throw new DaoException("Failed to find all cocktail from user bar by name");
-        }
-    }
-
-    public static HashMap<String, List<Cocktail>> findAll(Connection connection) throws DaoException {
-        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
-             ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
-
-            HashMap<String, List<Cocktail>> allUsersCocktails = new HashMap<>();
-
-            while (resultSet.next()) {
-
-                String userName = resultSet.getString("name");
-                UserBarDAO userBarDAO = new UserBarDAO();
-                List<Cocktail> cocktails = userBarDAO.findAllCocktailInUserBarByName(userName, connection);
-                allUsersCocktails.put(userName, cocktails);
-            }
-            return allUsersCocktails;
-        } catch (SQLException e) {
-            loggerDao.error("Failed to find all cocktail from all user bars", e);
-            throw new DaoException("Failed to find all cocktail from all user bars");
+            logger.error("Failed to find all cocktail from user's bar by name", e);
+            throw new DaoException("Failed to find all cocktail from user's bar by name");
         }
     }
 }

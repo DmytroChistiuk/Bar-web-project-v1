@@ -37,12 +37,12 @@ public class CocktailServiceTest {
         when(cocktailDAO.findAllCocktails(any())).thenReturn(testList);
         List<Cocktail> currentList = cocktailService.findAll();
         for (Cocktail cocktail : currentList) {
-            assertEquals(cocktail.getCocktailId(),testCocktail1.getCocktailId());
-            assertEquals(cocktail.getCocktailName(),testCocktail1.getCocktailName());
-            assertEquals(cocktail.getCocktailType(),testCocktail1.getCocktailType());
-            assertEquals(cocktail.getRecipe(),testCocktail1.getRecipe());
-            assertEquals(cocktail.getCocktailIcon(),testCocktail1.getCocktailIcon());
-            assertEquals(cocktail.getCocktailPhoto(),testCocktail1.getCocktailPhoto());
+            assertEquals(cocktail.getCocktailId(), testCocktail1.getCocktailId());
+            assertEquals(cocktail.getCocktailName(), testCocktail1.getCocktailName());
+            assertEquals(cocktail.getCocktailType(), testCocktail1.getCocktailType());
+            assertEquals(cocktail.getRecipe(), testCocktail1.getRecipe());
+            assertEquals(cocktail.getCocktailIcon(), testCocktail1.getCocktailIcon());
+            assertEquals(cocktail.getCocktailPhoto(), testCocktail1.getCocktailPhoto());
         }
 
 

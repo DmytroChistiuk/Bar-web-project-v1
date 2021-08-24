@@ -9,26 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CocktailDAO {
-    private static final Logger loggerDao = Logger.getLogger(CocktailDAO.class);
+    private static final Logger logger = Logger.getLogger(CocktailDAO.class);
     private static final String FILDS = "cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo";
     private static final String QUERY_FIND_ALL = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail";
     private static final String QUERY_FIND_BY_ID = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_id = ?";
     private static final String QUERY_FIND_BY_NAME = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_name = ?";
-    private static final String INSERT_SQL = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
+    private static final String QUERY_INSERT = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
-    public void deleteCocktail(int id, Connection connection) throws  DaoException{
-        try (PreparedStatement prepareStatement = connection.prepareStatement(DELETE)) {
+    public void deleteCocktail(int id, Connection connection) throws DaoException {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_DELETE)) {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
-            loggerDao.error("Failed to delete cocktail", e);
+            logger.error("Failed to delete cocktail", e);
             throw new DaoException("Failed to delete cocktail");
         }
     }
 
-    public Cocktail createCocktail(Cocktail cocktail, Connection connection) throws  DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL)) {
+    public Cocktail createCocktail(Cocktail cocktail, Connection connection) throws DaoException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT)) {
             preparedStatement.setString(1, cocktail.getCocktailName());
             preparedStatement.setString(2, cocktail.getRecipe());
             preparedStatement.setString(3, cocktail.getCocktailType());
@@ -39,12 +39,12 @@ public class CocktailDAO {
             preparedStatement.executeUpdate();
             return cocktail;
         } catch (SQLException e) {
-            loggerDao.error("Failed to create cocktail", e);
+            logger.error("Failed to create cocktail", e);
             throw new DaoException("Failed to create cocktail");
         }
     }
 
-    public Cocktail findById(int id, Connection connection) throws  DaoException {
+    public Cocktail findById(int id, Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_ID);
         ) {
             prepareStatement.setLong(1, id);
@@ -63,12 +63,12 @@ public class CocktailDAO {
             return null;
 
         } catch (SQLException e) {
-            loggerDao.error("Failed to find cocktail by id", e);
+            logger.error("Failed to find cocktail by id", e);
             throw new DaoException("Failed to find cocktail by id");
         }
     }
 
-    public Cocktail findByName(String name, Connection connection) throws  DaoException {
+    public Cocktail findByName(String name, Connection connection) throws DaoException {
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_BY_NAME);
         ) {
             prepareStatement.setString(1, name);
@@ -87,12 +87,12 @@ public class CocktailDAO {
             return null;
 
         } catch (SQLException e) {
-            loggerDao.error("Failed to find cocktail by name", e);
+            logger.error("Failed to find cocktail by name", e);
             throw new DaoException("Failed to find cocktail by name");
         }
     }
 
-    public List<Cocktail> findAllCocktails(Connection connection) throws  DaoException{
+    public List<Cocktail> findAllCocktails(Connection connection) throws DaoException {
 
         try (PreparedStatement prepareStatement = connection.prepareStatement(QUERY_FIND_ALL);
              ResultSet resultSet = prepareStatement.executeQuery(QUERY_FIND_ALL)) {
@@ -121,7 +121,7 @@ public class CocktailDAO {
             }
             return cocktails;
         } catch (SQLException e) {
-            loggerDao.error("Failed to find all cocktails", e);
+            logger.error("Failed to find all cocktails", e);
             throw new DaoException("Failed to find all cocktails");
         }
     }

@@ -15,10 +15,11 @@
 	<header class="main-header">
 		<ul>
 			<li><a onClick='window.location.href="UserBar"'>My bar</a></li>
-			<li><a onClick='window.location.href="cocktails"'>All cocktails</a></li>		
+			<li><a onClick='window.location.href="allCocktails"'>All cocktails</a></li>
+			<li><a onClick='window.location.href="allIngredients"'>All ingredients</a></li>
 		</ul>
   		<ul>
-			<li>profile</li>
+			<li>Profile</li>
 		</ul>
 	</header>
 	<main class="main-content">
@@ -37,6 +38,22 @@
 				</div>
 				<div class="col-md-6 col-sm-12">
 					<span>${user.surname}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<span>Login:</span>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<span>${user.login}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<span>Role:</span>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<span>${user.role}</span>
 				</div>
 			</div>
 		</div>

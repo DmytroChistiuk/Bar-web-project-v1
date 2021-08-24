@@ -8,12 +8,14 @@ import util.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import static util.Sha256Encryption.getSha256;
 
 public class UserService {
-    private static final Logger loggerService = Logger.getLogger(UserBarService.class);
+    private static final Logger logger = Logger.getLogger(UserBarService.class);
     private UserDAO userDAO;
+
     public UserService() {
         userDAO = new UserDAO();
     }
@@ -31,9 +33,9 @@ public class UserService {
         user.setRole("user");
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
-            return userDAO.createUser(user,connection);
+            return userDAO.createUser(user, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to create new user",e);
+            logger.error("Failed to create new user", e);
         }
         return user;
     }
@@ -41,9 +43,9 @@ public class UserService {
     public User getByUserLogin(String username) throws SQLException {
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
-            return userDAO.findByLogin(username,connection);
+            return userDAO.findByLogin(username, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get user by login",e);
+            logger.error("Failed to get user by login", e);
             return null;
         }
     }
@@ -51,10 +53,38 @@ public class UserService {
     public User getById(int id) throws SQLException {
         ConnectionPool connectionPool = ConnectionContext.get();
         try (Connection connection = connectionPool.getConnection()) {
-            return userDAO.findById(id,connection);
+            return userDAO.findById(id, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get user by id",e);
+            logger.error("Failed to get user by id", e);
             return null;
+        }
+    }
+
+    public List<User> findAll() throws SQLException {
+        ConnectionPool connectionPool = ConnectionContext.get();
+        try (Connection connection = connectionPool.getConnection()) {
+            return userDAO.findAll(connection);
+        } catch (SQLException e) {
+            logger.error("Failed to get all users", e);
+            return null;
+        }
+    }
+
+    public void setAdminRole(int id) throws SQLException {
+        ConnectionPool connectionPool = ConnectionContext.get();
+        try (Connection connection = connectionPool.getConnection()) {
+            userDAO.setAdminRole(id, connection);
+        } catch (SQLException e) {
+            logger.error("Failed to set admin role", e);
+        }
+    }
+
+    public void setUserRole(int id) throws SQLException {
+        ConnectionPool connectionPool = ConnectionContext.get();
+        try (Connection connection = connectionPool.getConnection()) {
+            userDAO.setUserRole(id, connection);
+        } catch (SQLException e) {
+            logger.error("Failed to set user role", e);
         }
     }
 }

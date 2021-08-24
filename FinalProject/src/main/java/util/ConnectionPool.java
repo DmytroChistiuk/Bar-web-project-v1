@@ -11,9 +11,11 @@ import java.util.concurrent.Executor;
 
 public class ConnectionPool {
     private Queue<Connection> queue = new LinkedList<>();
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         return queue.poll();
     }
+
     public void init() throws SQLException {
         for (int i = 0; i < 4; i++) {
             Connection connection = MySQLUtil.getConnection();
@@ -21,12 +23,14 @@ public class ConnectionPool {
 
         }
     }
+
     public class ConnectionWrapper implements Connection {
         public ConnectionWrapper(Connection connection) {
             this.connection = connection;
         }
 
         private Connection connection;
+
         @Override
         public Statement createStatement() throws SQLException {
             return connection.createStatement();
@@ -69,7 +73,7 @@ public class ConnectionPool {
 
         @Override
         public void close() throws SQLException {
-        queue.add(this);
+            queue.add(this);
         }
 
         @Override

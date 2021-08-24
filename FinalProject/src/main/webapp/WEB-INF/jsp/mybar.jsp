@@ -13,16 +13,15 @@
 <body>
 <c:forEach items="${userBar}" var="cocktail">
     <br>
+    <img src="${pageContext.request.contextPath}${cocktail.cocktailIcon}"/>
     <c:out value="${cocktail.cocktailName}"/>
-    <c:out value="${cocktail.recipe}"/>
-    <c:out value="${cocktail.cocktailType}"/>
-    <c:out value="${cocktail.cocktailHistory}"/>
+
     <a href="deleteFromUserBar?cocktailId=${cocktail.cocktailId}">Delete from my bar</a>
     <a href="deleteDublicatesFromUserBar?cocktailId=${cocktail.cocktailId}">Delete dublicates</a>
 
 </c:forEach>
 <br>
-<a href="cocktails">view all cocktails</a>
+<a href="allCocktails">view all cocktails</a>
 
 </body>
 </html>

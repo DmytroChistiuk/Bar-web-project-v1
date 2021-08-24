@@ -14,7 +14,7 @@ import java.util.List;
 import static dao.UserBarDAO.deleteCocktailFromUserBar;
 
 public class UserBarService {
-    private static final Logger loggerService = Logger.getLogger(UserBarService.class);
+    private static final Logger logger = Logger.getLogger(UserBarService.class);
     private UserBarDAO userBarDAO = new UserBarDAO();
 
     public Cocktail addCocktail(int id, Cocktail cocktail) throws SQLException {
@@ -22,7 +22,7 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             return userBarDAO.addCocktailToUserBar(id, cocktail, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to add",e);
+            logger.error("Failed to add cocktail to user's bar", e);
             return null;
         }
     }
@@ -32,7 +32,7 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             return userBarDAO.findAllCocktailByUserBarId(id, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get user bar",e);
+            logger.error("Failed to get user's bar", e);
             return null;
         }
     }
@@ -42,12 +42,12 @@ public class UserBarService {
         try (Connection connection = connectionPool.getConnection()) {
             deleteCocktailFromUserBar(cocktail.getCocktailName(), user.getId(), connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to delete cocktail",e);
-     }
+            logger.error("Failed to delete cocktail from user's bar", e);
+        }
         return null;
     }
 
-    public Cocktail deleteDublicateCocktail(Cocktail cocktail, User user) throws SQLException {
+    public Cocktail deleteDuplicateCocktail(Cocktail cocktail, User user) throws SQLException {
         ConnectionPool connectionPool = ConnectionContext.get();
         Connection connection = connectionPool.getConnection();
         try {
@@ -57,7 +57,7 @@ public class UserBarService {
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
-            loggerService.error("Failed to delete dublicate cocktail",e);
+            logger.error("Failed to delete duplicate cocktail from user's bar", e);
         } finally {
             connection.setAutoCommit(true);
             connection.close();

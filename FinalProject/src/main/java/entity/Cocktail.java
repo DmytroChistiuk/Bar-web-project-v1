@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Cocktail {
     private int cocktailId;
     private String cocktailName;
@@ -66,7 +68,34 @@ public class Cocktail {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cocktail cocktail = (Cocktail) o;
+        return cocktailId == cocktail.cocktailId &&
+                Objects.equals(cocktailName, cocktail.cocktailName) &&
+                Objects.equals(recipe, cocktail.recipe) &&
+                Objects.equals(cocktailType, cocktail.cocktailType) &&
+                Objects.equals(cocktailHistory, cocktail.cocktailHistory) &&
+                Objects.equals(cocktailIcon, cocktail.cocktailIcon) &&
+                Objects.equals(cocktailPhoto, cocktail.cocktailPhoto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cocktailId, cocktailName, recipe, cocktailType, cocktailHistory, cocktailIcon, cocktailPhoto);
+    }
+
+    @Override
     public String toString() {
-        return   cocktailName;
+        return "Cocktail{" +
+                "cocktailId=" + cocktailId +
+                ", cocktailName='" + cocktailName + '\'' +
+                ", recipe='" + recipe + '\'' +
+                ", cocktailType='" + cocktailType + '\'' +
+                ", cocktailHistory='" + cocktailHistory + '\'' +
+                ", cocktailIcon='" + cocktailIcon + '\'' +
+                ", cocktailPhoto='" + cocktailPhoto + '\'' +
+                '}';
     }
 }

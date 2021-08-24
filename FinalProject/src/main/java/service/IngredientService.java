@@ -11,8 +11,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class IngredientService {
-    IngredientDAO ingredientDAO;
-    private static final Logger loggerService = Logger.getLogger(IngredientService.class);
+    private IngredientDAO ingredientDAO;
+    private static final Logger logger = Logger.getLogger(IngredientService.class);
+
     public IngredientService() {
         ingredientDAO = new IngredientDAO();
     }
@@ -24,7 +25,7 @@ public class IngredientService {
         try (Connection connection = connectionPool.getConnection()) {
             return ingredientDAO.createIngredient(ingredient, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to create ingredient",e);
+            logger.error("Failed to create ingredient", e);
             return null;
         }
     }
@@ -34,7 +35,7 @@ public class IngredientService {
         try (Connection connection = connectionPool.getConnection()) {
             return ingredientDAO.findById(id, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get by id",e);
+            logger.error("Failed to get ingredient by id", e);
             return null;
         }
     }
@@ -44,7 +45,7 @@ public class IngredientService {
         try (Connection connection = connectionPool.getConnection()) {
             return ingredientDAO.findByName(name, connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to get by id",e);
+            logger.error("Failed to get ingredient by name", e);
             return null;
         }
     }
@@ -54,20 +55,22 @@ public class IngredientService {
         try (Connection connection = connectionPool.getConnection()) {
             return ingredientDAO.findAllIngredients(connection);
         } catch (SQLException e) {
-            loggerService.error("Failed to find All",e);
+            logger.error("Failed to find all ingredients", e);
             return null;
         }
     }
-    public boolean checkIngredientInDatebase(String name){
+
+    public boolean checkIngredientInDatabase(String name) {
         try {
             List<Ingredient> allIngredient = findAll();
             for (Ingredient ingredient : allIngredient) {
-                if(ingredient.getName().equals(name)){
+                if (ingredient.getName().equals(name)) {
                     return true;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to check is ingredient exist in database", e);
+            return false;
         }
         return false;
     }
