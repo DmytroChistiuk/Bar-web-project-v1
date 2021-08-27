@@ -26,7 +26,7 @@ public class RegisterController implements Controller {
                 return new ControllerResultDto("error-403");
             } else {
                 req.setAttribute("user", user);
-                return new ControllerResultDto("login");
+                return new ControllerResultDto("login",true);
             }
         } catch (Exception e) {
             logger.error("Failed to get results from service(create new user)", e);

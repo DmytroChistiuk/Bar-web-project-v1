@@ -23,41 +23,74 @@
 		</ul>
 	</header>
 	<main class="main-content">
-		<div class="main-content-wrapper">
+		<div class="main-content-wrapper-profile">
 			<div class="row">
-				<div class="col-md-6 col-sm-12">
-					<span>Name:</span>
+				<div class="col-md-12 col-sm-12 centered">
+					<img src="${pageContext.request.contextPath}/img/userIcon.png" width="200" height="222"
+						 class=" rounded-circle mx-auto d-block border border-dark" alt="...">
+					<br>
 				</div>
-				<div class="col-md-6 col-sm-12">
-					<span>${user.name}</span>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+
+				</div>
+				<div class="col-md-3 col-sm-12">
+                <span>
+                    <h5 style="text-align:center" class="text-dark  sbtt">
+                    Name:</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark  sbtt">${user.name}</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6 col-sm-12">
-					<span>Surname:</span>
+				<div class="col-md-3 col-sm-12">
+
 				</div>
-				<div class="col-md-6 col-sm-12">
-					<span>${user.surname}</span>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark  sbtt">Surname:</h5></span>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-12">
-					<span>Login:</span>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark  sbtt">${user.surname}</h5></span>
 				</div>
-				<div class="col-md-6 col-sm-12">
-					<span>${user.login}</span>
+				<div class="col-md-3 col-sm-12">
+
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6 col-sm-12">
-					<span>Role:</span>
+				<div class="col-md-3 col-sm-12">
+
 				</div>
-				<div class="col-md-6 col-sm-12">
-					<span>${user.role}</span>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark  sbtt">Login:</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark  sbtt">${user.login}</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+
+				</div>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark sbtt">Role:</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+					<span><h5 style="text-align:center" class="text-dark sbtt">${user.role}</h5></span>
+				</div>
+				<div class="col-md-3 col-sm-12">
+
 				</div>
 			</div>
 		</div>
-	</main>  
-
+	</main>
 </body>
 </html>

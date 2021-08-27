@@ -10,6 +10,7 @@ public class ControllerFactory {
     private void init() {
         controllerMap.put("GET/login", new ShowPageController("login"));
         controllerMap.put("GET/register", new ShowPageController("register"));
+        controllerMap.put("GET/addCocktail", new ShowPageController("addCocktail"));
         controllerMap.put("GET/allCocktails", new FindAllCocktailController());
         controllerMap.put("GET/currentCocktails", new ShowCocktailController());
         controllerMap.put("GET/addToUserBar", new AddUserBarController());

@@ -6,14 +6,22 @@ body {
 	background-color: #FDD2BF;
 }
 
-div[class^="col"] 
-{
-	outline: 2px solid black;
-}
+
 
 
 /*------------------------------AUTH STYLES-------------------------------*/
+.frame {
+	border: 3px solid #e10700;
+}
+.letter {
+	color: #000000; /* Цвет символа */
+	font-size: 200%; /* Размер шрифта */
+}
+.centerd{
 
+	text-align: center;
+
+}
 .sbtn {
 	width: 100%;
 	color: white;
@@ -22,13 +30,18 @@ div[class^="col"]
     margin: 5px 0px 0px 0px;
 	border: 0px solid black;
 	outline: 0px solid black;
-	background-color: #FF6B6B;
+	background-color: #ff6b6b;
 }
 
 .sbtn:hover {
 	background-color: #B61919;
 }
-
+.sbtt {
+	background-color: #ffffff;
+}
+.sbtn2:hover {
+	background-color: #ffffff;
+}
 .auth-back {
 	position: absolute;
 	top: calc(50% - 180px);
@@ -126,6 +139,8 @@ div[class^="col"]
 }
 
 .main-content {
+	overflow-y: auto;
+	overflow-x: hidden;
 	position: fixed;
 	top: 80px;
 	left: 0px;
@@ -136,11 +151,17 @@ div[class^="col"]
 .main-content-wrapper {
 	padding: 20px;
 	width: 1032px;
-	height: 100%;
+	height: auto;
 	margin: 0px auto;
 	background-color: #b8b7b8;
 }
-
+.main-content-wrapper-profile {
+	padding: 20px;
+	width: 1032px;
+	height:100%;
+	margin: 0px auto;
+	background-color: #b8b7b8;
+}
 .main-content-wrapper span {
 	font-size: 16px;
 	color: #ffffff;
