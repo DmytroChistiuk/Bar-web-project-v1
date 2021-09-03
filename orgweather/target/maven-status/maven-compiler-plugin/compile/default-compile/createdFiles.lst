@@ -1,8 +1,0 @@
-entity\Main.class
-service\StartPage.class
-entity\Wind.class
-controller\StartPageController.class
-entity\Coord.class
-entity\Weather.class
-entity\WeatherData.class
-util\WeatherDataScanner.class
