@@ -2,6 +2,9 @@ package entity;
 
 import java.util.Objects;
 
+/**
+ * This entity is associated with the table "user_bar" in the database.
+ */
 public class UserBar {
     private int userId;
     private String cocktailName;

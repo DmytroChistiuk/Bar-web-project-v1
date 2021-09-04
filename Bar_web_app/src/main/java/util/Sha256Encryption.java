@@ -4,6 +4,10 @@ import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;
 
+/**
+ * This class is used to encrypt user's password.
+ * Mechanism of encryption is Sha256.
+ */
 public class Sha256Encryption {
     private static final Logger logger = Logger.getLogger(Sha256Encryption.class);
 

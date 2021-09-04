@@ -8,7 +8,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.Executor;
-
+/**
+ * This class is wrapper to Connection class.
+ * All connection is consisted in queue.
+ * 4 connections are initialized for the whole project.
+ */
 public class ConnectionPool  {
     private Queue<Connection> queue = new LinkedList<>();
 

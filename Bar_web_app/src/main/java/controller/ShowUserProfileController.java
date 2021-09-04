@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * The class realized logic of showing current user's profile.
+ * The user's id is got by session parameter.
+ * If user get admin role, they will redirect to admin profile.
+ */
 public class ShowUserProfileController implements Controller {
     private static final Logger logger = Logger.getLogger(ShowUserProfileController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

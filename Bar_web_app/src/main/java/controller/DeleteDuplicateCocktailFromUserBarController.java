@@ -9,7 +9,11 @@ import service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * The class realized logic of deleting duplicate of current cocktail from user's bar.
+ * The cocktail's id is got by request parameter.
+ * The user's id is got by session parameter.
+ */
 public class DeleteDuplicateCocktailFromUserBarController implements Controller {
     private static final Logger logger = Logger.getLogger(DeleteDuplicateCocktailFromUserBarController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

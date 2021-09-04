@@ -4,7 +4,9 @@ import entity.Cocktail;
 
 import java.sql.Connection;
 import java.util.List;
-
+/**
+ * Defines all methods that will be used with the entity Cocktail in database.
+ */
 public interface СocktailDao {
     void deleteCocktail(int id, Connection connection) throws DaoException;
 

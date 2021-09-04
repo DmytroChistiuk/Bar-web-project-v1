@@ -10,9 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Implementation of CocktailIngredientDao interface.
+ * This class implements CRUD with the entity Ingredient and Cocktail in the same time.
+ */
 public class CocktailIngredientDaoImpl implements CocktailIngredientDao {
     private static final Logger logger = Logger.getLogger(CocktailIngredientDaoImpl.class);
+    /**
+     * All queries that will execute to the database.
+     */
     private static final String QUERY_FIND_BY_INGREDIENT_NAME = "" +
             "select cocktail.cocktail_name,cocktail.recipe,cocktail.cocktail_type,cocktail.cocktail_id,cocktail.cocktail_history,cocktail.icon,cocktail.photo, ingredients.name, ingredients.ingredient_id" +
             " from cocktail_ingredient" +

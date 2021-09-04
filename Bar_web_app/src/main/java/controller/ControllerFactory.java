@@ -4,9 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class operate with requests and its controllers.
+ */
 public class ControllerFactory {
+    /**
+     * HashMap consist:
+     * key - GET/POST/PUT request
+     * object - Controller which processes request
+     */
     private Map<String, Controller> controllerMap = new HashMap<>();
 
+    /**
+     * Method to initiated all request and controllers.
+     */
     private void init() {
         controllerMap.put("GET/login", new ShowPageController("login"));
         controllerMap.put("GET/register", new ShowPageController("register"));
@@ -30,12 +41,14 @@ public class ControllerFactory {
 
 
     }
-
+    /**
+     * The method returns the request and its controller.
+     * If controllerMap is empty call method init.
+     */
     public Controller getController(HttpServletRequest request) {
         if (controllerMap.isEmpty()) {
             init();
         }
-
         return controllerMap.get(request.getMethod() + request.getPathInfo());
     }
 }

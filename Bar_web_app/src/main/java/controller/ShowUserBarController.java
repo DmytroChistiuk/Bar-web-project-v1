@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * The class realized logic of finding all cocktails which is in current user's bar, displaying current user's bar profile.
+ * The user's id is got by session parameter.
+ */
 public class ShowUserBarController implements Controller {
     private static final Logger logger = Logger.getLogger(ShowUserBarController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

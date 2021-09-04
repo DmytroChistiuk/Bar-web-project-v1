@@ -10,7 +10,12 @@ import service.IngredientServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
-
+/**
+ * The class realized logic of creating new cocktail and adding that cocktail to database.
+ * The cocktail's parameters is got by request parameter.
+ * Сhecks if the created cocktail exists in the database.
+ * Сhecks if the created cocktail's ingredients exist in the database.
+ */
 public class CreateCocktailController implements Controller {
     private static final Logger logger = Logger.getLogger(CreateCocktailController.class);
     private CocktailServiceImpl cocktailServiceImpl = new CocktailServiceImpl();

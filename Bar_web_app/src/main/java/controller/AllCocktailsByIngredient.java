@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
+/**
+ * The class realized logic of finding all cocktails by current ingredient.
+ * The ingredient's id is got by request parameter.
+ * The result cocktails sets to session parameter.
+ */
 public class AllCocktailsByIngredient implements Controller {
     private static final Logger logger = Logger.getLogger(AllCocktailsByIngredient.class);
     private IngredientServiceImpl ingredientServiceImpl = new IngredientServiceImpl();

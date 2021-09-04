@@ -10,6 +10,11 @@ import service.UserServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * The class realized logic of adding current cocktail to current user's bar.
+ * The cocktail's id is got by request parameter.
+ * The user's id is got by session parameter.
+ */
 public class AddUserBarController implements Controller {
     private static final Logger logger = Logger.getLogger(AddUserBarController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

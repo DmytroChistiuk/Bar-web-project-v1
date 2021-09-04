@@ -3,7 +3,9 @@ package service;
 import entity.Cocktail;
 
 import java.util.List;
-
+/**
+ * Defines all methods that will be used with the entity Cocktail.
+ */
 public interface CocktailService {
     void delete(int id) throws ServiceException;
 

@@ -6,7 +6,10 @@ import service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * The class realized logic changing user's role to admin or user.
+ * The user's id is got by request parameter.
+ */
 public class ChangeUserRoleController implements Controller {
     private UserServiceImpl userServiceImpl = new UserServiceImpl();
     private static final Logger logger = Logger.getLogger(ChangeUserRoleController.class);

@@ -1,7 +1,9 @@
 package entity;
 
 import java.util.Objects;
-
+/**
+ * This entity is associated with the table "user" in the database.
+ */
 public class User {
     private int id;
     private String name;

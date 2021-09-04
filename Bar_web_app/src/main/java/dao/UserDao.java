@@ -4,7 +4,9 @@ import entity.User;
 
 import java.sql.Connection;
 import java.util.List;
-
+/**
+ * Defines all methods that will be used with the entity User in database.
+ */
 public interface UserDao {
     User createUser(User user, Connection connection) throws DaoException;
 

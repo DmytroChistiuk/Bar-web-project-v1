@@ -9,7 +9,12 @@ import util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * Implementation of IngredientService interface.
+ * This class implements all the logic of working with the entity Ingredient.
+ * This class work with IngredientDao.
+ * In the methods of this class creates connection for transfer to Database.
+ */
 public class IngredientServiceImpl implements IngredientService{
     private IngredientDaoImpl ingredientDaoImpl;
     private static final Logger logger = Logger.getLogger(IngredientServiceImpl.class);
@@ -79,6 +84,14 @@ public class IngredientServiceImpl implements IngredientService{
             throw new ServiceException("Failed to find all ingredients");
         }
     }
+
+    /**
+     * This method checks is ingredient exist in database and return true or false.
+     * Method is used to prevent duplicates in database.
+     * @param name
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public boolean checkIngredientInDatabase(String name) throws ServiceException {
         try {

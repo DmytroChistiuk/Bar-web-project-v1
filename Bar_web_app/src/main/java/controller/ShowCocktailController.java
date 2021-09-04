@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-
+/**
+ * The class implements the logic of displaying all cocktails for a given session.
+ */
 public class ShowCocktailController implements Controller {
     private static final Logger logger = Logger.getLogger(ShowCocktailController.class);
 

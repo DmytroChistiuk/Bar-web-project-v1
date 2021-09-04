@@ -4,7 +4,9 @@ import entity.Ingredient;
 
 import java.sql.Connection;
 import java.util.List;
-
+/**
+ * Defines all methods that will be used with the entity Ingredient in database.
+ */
 public interface IngredientDao {
     Ingredient createIngredient(Ingredient ingredient, Connection connection) throws DaoException;
 

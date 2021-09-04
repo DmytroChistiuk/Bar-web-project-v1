@@ -4,6 +4,9 @@ import entity.User;
 
 import java.util.List;
 
+/**
+ * Defines all methods that will be used with the entity User.
+ */
 public interface UserService {
     User createNewUser(String name, String surname, String login, String password) throws ServiceException;
 

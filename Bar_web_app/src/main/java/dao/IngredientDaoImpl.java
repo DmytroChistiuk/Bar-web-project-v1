@@ -6,9 +6,15 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Implementation of IngredientDao interface.
+ * This class implements CRUD with the entity Ingredient.
+ */
 public class IngredientDaoImpl implements IngredientDao {
     private static final Logger logger = Logger.getLogger(IngredientDaoImpl.class);
+    /**
+     * All queries that will execute to the database.
+     */
     private static final String QUERY_FIND_ALL = "SELECT name,ingredient_id FROM ingredients";
     private static final String QUERY_FIND_BY_ID = "SELECT name,ingredient_id FROM ingredients where ingredient_id = ?";
     private static final String QUERY_INSERT = "INSERT INTO ingredients (name) VALUES(?)";

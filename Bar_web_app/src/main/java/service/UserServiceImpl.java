@@ -12,6 +12,12 @@ import java.util.List;
 
 import static util.Sha256Encryption.getSha256;
 
+/**
+ * Implementation of UserService interface.
+ * This class implements all the logic of working with the entity User.
+ * This class work with UserDao.
+ * In the methods of this class creates connection for transfer to Database.
+ */
 public class UserServiceImpl implements UserService {
     private static final Logger logger = Logger.getLogger(UserBarServiceImpl.class);
     private UserDaoImpl userDaoImpl;

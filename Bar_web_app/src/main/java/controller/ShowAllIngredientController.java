@@ -7,7 +7,10 @@ import service.IngredientServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
+/**
+ * The class realized logic of finding all ingredients which exist in database.
+ * The result will send by respond parameter.
+ */
 public class ShowAllIngredientController implements Controller {
     private static final Logger logger = Logger.getLogger(ShowAllIngredientController.class);
     private IngredientServiceImpl ingredientServiceImpl = new IngredientServiceImpl();

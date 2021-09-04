@@ -9,7 +9,11 @@ import service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * The class realized logic of deleting current cocktail from user's bar.
+ * The cocktail's id is got by request parameter.
+ * The user's id is got by session parameter.
+ */
 public class DeleteFromUserBarController implements Controller {
     private static final Logger logger = Logger.getLogger(DeleteFromUserBarController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

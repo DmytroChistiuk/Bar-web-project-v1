@@ -6,14 +6,19 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Implementation of CocktailDao interface.
+ * This class implements CRUD with the entity Cocktail.
+ */
 public class CocktailDaoImpl implements СocktailDao {
     private static final Logger logger = Logger.getLogger(CocktailDaoImpl.class);
-    private static final String FILDS = "cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo";
+    /**
+     * All queries that will execute to the database.
+     */
     private static final String QUERY_FIND_ALL = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail";
     private static final String QUERY_FIND_BY_ID = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_id = ?";
     private static final String QUERY_FIND_BY_NAME = "SELECT cocktail_id,cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo FROM cocktail where cocktail_name = ?";
-    private static final String QUERY_INSERT = "INSERT INTO cocktail(" + FILDS + ") VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_INSERT = "INSERT INTO cocktail(cocktail_name, cocktail_type, cocktail_history, recipe, icon, photo) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String QUERY_DELETE = "DELETE FROM cocktail WHERE cocktail_id = ?";
 
     @Override

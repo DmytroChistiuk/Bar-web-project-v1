@@ -7,9 +7,15 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Implementation of UserBarDao interface.
+ * This class implements CRUD with the entity UserBar.
+ */
 public class UserBarDaoImpl implements UserBarDao {
     private static final Logger logger = Logger.getLogger(UserBarDaoImpl.class);
+    /**
+     * All queries that will execute to the database.
+     */
     private static final String QUERY_FIND_BY_ID = "" +
             "select cocktail.cocktail_id, user.name, cocktail.cocktail_name,cocktail.recipe, cocktail.cocktail_type,cocktail.cocktail_history, cocktail.icon, cocktail.photo" +
             " from user_bar " +

@@ -9,7 +9,12 @@ import util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-
+/**
+ * Implementation of CocktailService interface.
+ * This class implements all the logic of working with the entity Cocktail.
+ * This class work with CocktailDao.
+ * In the methods of this class creates connection for transfer to Database.
+ */
 public class CocktailServiceImpl implements CocktailService {
     private CocktailDaoImpl cocktailDAOImpl;
     private ConnectionPool connectionPool = null;
@@ -115,6 +120,13 @@ public class CocktailServiceImpl implements CocktailService {
         }
     }
 
+    /**
+     * This method checks is cocktail exist in database and return true or false.
+     * Method is used to prevent duplicates in database.
+     * @param name
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public boolean checkCocktailInDatabase(String name) throws ServiceException {
         try {

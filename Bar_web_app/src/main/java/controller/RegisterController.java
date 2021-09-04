@@ -7,7 +7,11 @@ import service.UserServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
-
+/**
+ * The class realized logic of creating new user.
+ * The user's parameters is got by request parameter.
+ * The password will be encrypt by Sha256.
+ */
 public class RegisterController implements Controller {
     private static final Logger logger = Logger.getLogger(RegisterController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

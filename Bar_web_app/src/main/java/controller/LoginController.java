@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import static util.Sha256Encryption.getSha256;
-
+/**
+ * The class realized logic of login.
+ * The user's parameters is got by request parameter.
+ * The user's id sets to session parameter.
+ */
 public class LoginController implements Controller {
     private static final Logger logger = Logger.getLogger(LoginController.class);
     private UserServiceImpl userServiceImpl = new UserServiceImpl();

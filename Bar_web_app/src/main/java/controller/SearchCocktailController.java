@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class realized logic of searching cocktail by name.
+ * The cocktail's name is got by request parameter.
+ * The result cocktail sets to session parameter.
+ */
 public class SearchCocktailController implements Controller {
     private static final Logger logger = Logger.getLogger(SearchCocktailController.class);
     private CocktailServiceImpl cocktailServiceImpl = new CocktailServiceImpl();

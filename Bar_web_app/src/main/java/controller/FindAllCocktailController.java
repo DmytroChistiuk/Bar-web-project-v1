@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
+/**
+ * The class realized logic of finding all cocktails which exist in database.
+ * The result cocktails sets to session parameter.
+ */
 public class FindAllCocktailController implements Controller {
     private static final Logger logger = Logger.getLogger(FindAllCocktailController.class);
     private CocktailServiceImpl cocktailServiceImpl = new CocktailServiceImpl();

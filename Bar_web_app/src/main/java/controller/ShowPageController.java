@@ -5,9 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 
-
+/**
+ * The class realized logic of displaying GET request to jsp pages which don't have own controllers.
+ */
 public class ShowPageController implements Controller {
-
+    /**
+     * VIEW_NAME it is name of jsp pages.
+     */
     private final String VIEW_NAME;
 
     public ShowPageController(String viewName) {

@@ -7,9 +7,15 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Implementation of CocktailDao interface.
+ * This class implements CRUD with the entity User.
+ */
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+    /**
+     * All queries that will execute to the database.
+     */
     private static final String QUERY_FIND_ALL = "SELECT name,surname,login,password,id,role FROM user";
     private static final String QUERY_FIND_BY_ID = "SELECT * FROM user where id = ?";
     private static final String QUERY_INSERT = "INSERT INTO user (name,surname,login,password,role) VALUES(?, ?, ?, ?, ?)";
