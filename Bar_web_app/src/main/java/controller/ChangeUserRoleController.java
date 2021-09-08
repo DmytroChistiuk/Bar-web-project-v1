@@ -3,6 +3,7 @@ package controller;
 import entity.User;
 import org.apache.log4j.Logger;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,19 +18,19 @@ public class ChangeUserRoleController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String currentUserId = req.getParameter("id");
+            String currentUserId = req.getParameter(Constant.currentUserId);
             User user = userServiceImpl.getById(Integer.parseInt(currentUserId));
-            if (user.getRole().equals("admin")) {
+            if (user.getRole().equals(Constant.admin)) {
                 userServiceImpl.setUserRole(user.getId());
-                return new ControllerResultDto("success");
+                return new ControllerResultDto(Constant.success);
             } else {
                 userServiceImpl.setAdminRole(user.getId());
-                return new ControllerResultDto("success");
+                return new ControllerResultDto(Constant.success);
             }
 
         } catch (Exception e) {
             logger.error("Failed to get results from service (set new role to user)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

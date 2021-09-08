@@ -3,6 +3,7 @@ package controller;
 import entity.User;
 import org.apache.log4j.Logger;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,20 +22,20 @@ public class LoginController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String login = req.getParameter("login");
-            String password = req.getParameter("password");
+            String login = req.getParameter(Constant.login);
+            String password = req.getParameter(Constant.password);
             User user = userServiceImpl.getByUserLogin(login);
             if (user.getPassword().equals(getSha256(password))) {
-                req.setAttribute("user", user);
+                req.setAttribute(Constant.user, user);
                 HttpSession session = req.getSession();
-                session.setAttribute("userId", user.getId());
-                return new ControllerResultDto("profile", true);
+                session.setAttribute(Constant.userId, user.getId());
+                return new ControllerResultDto(Constant.profile, true);
             } else {
-                return new ControllerResultDto("error-403");
+                return new ControllerResultDto(Constant.error403);
             }
         } catch (Exception e) {
             logger.error("Failed to get results from service (get user)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

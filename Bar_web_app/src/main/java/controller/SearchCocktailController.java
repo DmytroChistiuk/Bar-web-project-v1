@@ -3,6 +3,7 @@ package controller;
 import entity.Cocktail;
 import org.apache.log4j.Logger;
 import service.CocktailServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,16 +22,16 @@ public class SearchCocktailController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String cocktailName = req.getParameter("cocktailName");
+            String cocktailName = req.getParameter(Constant.cocktailName);
             List<Cocktail> cocktails = new ArrayList<>();
             Cocktail cocktail = cocktailServiceImpl.getByName(cocktailName);
             cocktails.add(cocktail);
             HttpSession session = req.getSession();
-            session.setAttribute("cocktails", cocktails);
-            return new ControllerResultDto("currentCocktails", true);
+            session.setAttribute(Constant.cocktails, cocktails);
+            return new ControllerResultDto(Constant.currentCocktails, true);
         } catch (Exception e) {
             logger.error("Failed to get results from service (get cocktail)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

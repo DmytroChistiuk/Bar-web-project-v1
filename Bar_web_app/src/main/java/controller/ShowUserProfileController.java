@@ -3,6 +3,7 @@ package controller;
 import entity.User;
 import org.apache.log4j.Logger;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,20 +21,20 @@ public class ShowUserProfileController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            Integer userId = (Integer) req.getSession().getAttribute("userId");
+            Integer userId = (Integer) req.getSession().getAttribute(Constant.userId);
             User user = userServiceImpl.getById(userId);
-            req.setAttribute("user", user);
-            if (user.getRole().equals("admin")) {
-                req.setAttribute("user", user);
+            req.setAttribute(Constant.user, user);
+            if (user.getRole().equals(Constant.admin)) {
+                req.setAttribute(Constant.user, user);
                 List<User> users = userServiceImpl.findAll();
                 users.remove(user);
-                req.setAttribute("users", users);
-                return new ControllerResultDto("adminProfile");
+                req.setAttribute(Constant.users, users);
+                return new ControllerResultDto(Constant.adminProfile);
             }
-            return new ControllerResultDto("profile");
+            return new ControllerResultDto(Constant.profile);
         } catch (Exception e) {
             logger.error("Failed to get results from service (get user/users)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

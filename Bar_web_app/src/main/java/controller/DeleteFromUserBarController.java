@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import service.CocktailServiceImpl;
 import service.UserBarServiceImpl;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,16 +24,16 @@ public class DeleteFromUserBarController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String cocktailId = req.getParameter("cocktailId");
+            String cocktailId = req.getParameter(Constant.cocktailId);
             Cocktail cocktail = cocktailServiceImpl.getById(Integer.parseInt(cocktailId));
-            Integer userId = (Integer) req.getSession().getAttribute("userId");
+            Integer userId = (Integer) req.getSession().getAttribute(Constant.userId);
             User user = userServiceImpl.getById(userId);
             userBarServiceImpl.deleteCocktail(cocktail, user);
-            req.setAttribute("userBar", userBarServiceImpl.getUserBar(user.getId()));
-            return new ControllerResultDto("mybar");
+            req.setAttribute(Constant.userBar, userBarServiceImpl.getUserBar(user.getId()));
+            return new ControllerResultDto(Constant.mybar);
         } catch (Exception e) {
             logger.error("Failed to get results from service (delete cocktail, get user's bar)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

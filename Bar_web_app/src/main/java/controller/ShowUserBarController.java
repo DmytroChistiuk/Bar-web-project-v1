@@ -4,6 +4,7 @@ import entity.User;
 import org.apache.log4j.Logger;
 import service.UserBarServiceImpl;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,15 +23,15 @@ public class ShowUserBarController implements Controller {
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
             HttpSession session = req.getSession();
-            Integer userId = (Integer) session.getAttribute("userId");
+            Integer userId = (Integer) session.getAttribute(Constant.userId);
             User user = userServiceImpl.getById(userId);
-            req.setAttribute("userBar", userBarServiceImpl.getUserBar(user.getId()));
+            req.setAttribute(Constant.userBar, userBarServiceImpl.getUserBar(user.getId()));
 
-            return new ControllerResultDto("mybar");
+            return new ControllerResultDto(Constant.mybar);
         } catch (Exception e) {
             {
                 logger.error("Failed to get results from service (get user's bar)", e);
-                return new ControllerResultDto("error-500");
+                return new ControllerResultDto(Constant.error500);
             }
         }
     }

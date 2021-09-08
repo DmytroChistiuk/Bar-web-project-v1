@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import service.CocktailIngredientServiceImpl;
 import service.CocktailServiceImpl;
 import service.IngredientServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,24 +26,24 @@ public class CreateCocktailController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String cocktailName = req.getParameter("cocktailName");
-            String recipe = req.getParameter("recipe");
-            String cocktailType = req.getParameter("cocktailType");
-            String cocktailHistory = req.getParameter("cocktailHistory");
-            String cocktailIcon = req.getParameter("cocktailIcon");
-            String cocktailPhoto = req.getParameter("cocktailPhoto");
-            String ingredientsName = req.getParameter("ingredientsName");
+            String cocktailName = req.getParameter(Constant.cocktailName);
+            String recipe = req.getParameter(Constant.recipe);
+            String cocktailType = req.getParameter(Constant.cocktailType);
+            String cocktailHistory = req.getParameter(Constant.cocktailHistory);
+            String cocktailIcon = req.getParameter(Constant.cocktailIcon);
+            String cocktailPhoto = req.getParameter(Constant.cocktailPhoto);
+            String ingredientsName = req.getParameter(Constant.ingredientsName);
             if (!cocktailServiceImpl.checkCocktailInDatabase(cocktailName)) {
                 Cocktail cocktailFromDatabase = cocktailServiceImpl.create(cocktailName, recipe, cocktailType, cocktailHistory, cocktailIcon, cocktailPhoto);
                 if (Objects.isNull(cocktailFromDatabase)) {
-                    return new ControllerResultDto("error-403");
+                    return new ControllerResultDto(Constant.error403);
                 } else {
                     Cocktail cocktail = cocktailServiceImpl.getByName(cocktailName);
                     for (String ingredient : ingredientsName.split(",")) {
                         if (!ingredientServiceImpl.checkIngredientInDatabase(ingredient)) {
                             Ingredient ingredientFromDatabase = ingredientServiceImpl.create(ingredient);
                             if (Objects.isNull(ingredientFromDatabase)) {
-                                return new ControllerResultDto("error-403");
+                                return new ControllerResultDto(Constant.error403);
                             }
                             Ingredient currentCreatedIngredient = ingredientServiceImpl.getByName(ingredient);
                             cocktailIngredientServiceImpl.setChainCocktailIngredient(cocktail.getCocktailId(), currentCreatedIngredient.getIngredientId());
@@ -54,12 +55,12 @@ public class CreateCocktailController implements Controller {
                     }
                 }
             } else {
-                return new ControllerResultDto("cocktailAlreadyInDB");
+                return new ControllerResultDto(Constant.cocktailAlreadyInDB);
             }
-            return new ControllerResultDto("success");
+            return new ControllerResultDto(Constant.success);
         } catch (Exception e) {
             logger.error("Failed to get results from service (create cocktail, set chain cocktailID->ingredientID)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

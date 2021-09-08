@@ -3,6 +3,7 @@ package controller;
 import entity.Cocktail;
 import org.apache.log4j.Logger;
 import service.CocktailServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +22,11 @@ public class FindAllCocktailController implements Controller {
         try {
             List<Cocktail> cocktails = cocktailServiceImpl.findAll();
             HttpSession session = req.getSession();
-            session.setAttribute("cocktails", cocktails);
-            return new ControllerResultDto("currentCocktails", true);
+            session.setAttribute(Constant.cocktails, cocktails);
+            return new ControllerResultDto(Constant.currentCocktails, true);
         } catch (Exception e) {
             logger.error("Failed to get results from service (find all cocktails)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

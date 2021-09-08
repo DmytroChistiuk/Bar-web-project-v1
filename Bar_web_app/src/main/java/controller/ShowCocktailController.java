@@ -2,6 +2,7 @@ package controller;
 
 import entity.Cocktail;
 import org.apache.log4j.Logger;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,11 +18,11 @@ public class ShowCocktailController implements Controller {
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
             List<Cocktail> cocktails = (List<Cocktail>) req.getSession().getAttribute("cocktails");
-            req.setAttribute("cocktails", cocktails);
-            return new ControllerResultDto("cocktails");
+            req.setAttribute(Constant.cocktails, cocktails);
+            return new ControllerResultDto(Constant.cocktails);
         } catch (Exception e) {
             logger.error("Failed to get session attribute", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

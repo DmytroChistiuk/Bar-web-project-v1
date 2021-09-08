@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import service.CocktailServiceImpl;
 import service.UserBarServiceImpl;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,15 +25,15 @@ public class AddUserBarController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String cocktailId = req.getParameter("cocktailId");
+            String cocktailId = req.getParameter(Constant.cocktailId);
             Cocktail cocktail = cocktailServiceImpl.getById(Integer.parseInt(cocktailId));
-            Integer userId = (Integer) req.getSession().getAttribute("userId");
+            Integer userId = (Integer) req.getSession().getAttribute(Constant.userId);
             User user = userServiceImpl.getById(userId);
             userBarServiceImpl.addCocktail(user.getId(), cocktail);
-            return new ControllerResultDto("allCocktails", true);
+            return new ControllerResultDto(Constant.allCocktails, true);
         } catch (Exception e) {
             logger.error("Failed to get results from service (add cocktail to user's bar)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }

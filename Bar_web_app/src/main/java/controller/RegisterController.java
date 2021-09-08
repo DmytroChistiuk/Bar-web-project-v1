@@ -3,6 +3,7 @@ package controller;
 import entity.User;
 import org.apache.log4j.Logger;
 import service.UserServiceImpl;
+import util.Constant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,21 +20,21 @@ public class RegisterController implements Controller {
     @Override
     public ControllerResultDto execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String name = req.getParameter("name");
-            String surname = req.getParameter("surname");
-            String login = req.getParameter("login");
-            String password = req.getParameter("password");
+            String name = req.getParameter(Constant.name);
+            String surname = req.getParameter(Constant.surname);
+            String login = req.getParameter(Constant.login);
+            String password = req.getParameter(Constant.password);
             User user = userServiceImpl.createNewUser(name, surname, login, password);
 
             if (Objects.isNull(user)) {
-                return new ControllerResultDto("error-403");
+                return new ControllerResultDto(Constant.error403);
             } else {
-                req.setAttribute("user", user);
-                return new ControllerResultDto("login",true);
+                req.setAttribute(Constant.user, user);
+                return new ControllerResultDto(Constant.login,true);
             }
         } catch (Exception e) {
             logger.error("Failed to get results from service(create new user)", e);
-            return new ControllerResultDto("error-500");
+            return new ControllerResultDto(Constant.error500);
         }
     }
 }
